@@ -343,27 +343,6 @@ return message1</script></con:configuration><con:name>MessageGen</con:name><con:
   <con:entry key="authorizedUserName" value="${Authenticate User#Response#$['ResponseData']['username']}"/>
   <con:entry key="applicationName" value="${Property#Application Name}"/>
   <con:entry key="Content-Type" value="${Property#ContentType}"/>
-</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>TimeinUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>authorizedUserName</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="9011badc-cc95-4972-87f6-aa442d0f928d"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="sessionSearch" id="557e1b57-4b2f-4747-950e-a93453be7dea"><con:settings/><con:config service="environmentEndpoint" resourcePath="/provider/v1/sessions/search" methodName="sessionSearch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="sessionSearch" id="d4cd37fb-2cd5-449a-b25b-84c96c907b42" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://pistachioapi.zillion.com</con:endpoint><con:request>{
-"timeOfRequestInUTC":"${Property#UTCDate}"
-}
-</con:request><con:originalUri>https://testapi.zillion.com/provider/v2/provider/4F12F5E67D204380E055000000000001/profile</con:originalUri><con:assertion type="JsonPath Match" name="JsonPath Match" id="5abfa71f-9873-412c-b2c9-0f1fa34e355e"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
-  <con:entry key="pageNumber" value="${DataSource#pageNumber}"/>
-  <con:entry key="endDate" value="2017-07-07T05:05:00.000Z"/>
-  <con:entry key="coachID" value="${DataSource#providerID}"/>
-  <con:entry key="organizationID" value="${DataSource#orgId}"/>
-  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
-  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
-  <con:entry key="sortColumn" value="${DataSource#sortColumn}"/>
-  <con:entry key="sessionstatus" value="${DataSource#sessionStatus}"/>
-  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
-  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
-  <con:entry key="providerID" value="${Property#ProviderID}"/>
-  <con:entry key="sortOrder" value="${DataSource#sortOrder}"/>
-  <con:entry key="TimeinUTC" value="${TimeGen#UTC_Time}"/>
-  <con:entry key="authorizedUserName" value="${Authenticate User#Response#$['ResponseData']['username']}"/>
-  <con:entry key="applicationName" value="${Property#Application Name}"/>
-  <con:entry key="startDate" value="2017-07-07T05:05:00.000Z"/>
-  <con:entry key="Content-Type" value="${Property#ContentType}"/>
 </con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>TimeinUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>authorizedUserName</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="9011badc-cc95-4972-87f6-aa442d0f928d"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="providerDiagonist" id="33f2f6f3-ff54-4e96-ab1d-89ec27afe7d3"><con:settings/><con:config service="environmentEndpoint" resourcePath="/provider/v2/provider/diagnostics" methodName="providerDiagonist" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="providerDiagonist" id="d4cd37fb-2cd5-449a-b25b-84c96c907b42" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://pistachioapi.zillion.com</con:endpoint><con:request>{
 "timeOfRequestInUTC":"${Property#UTCDate}"
 }
