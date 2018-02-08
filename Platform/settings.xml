@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="49a3def9-762a-4993-b54b-fdb005be8454" name="Platform" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="49a3def9-762a-4993-b54b-fdb005be8454fileName">Platform</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="7543b335-a858-4206-b6bb-18f4e3aef32e"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testSuite>
