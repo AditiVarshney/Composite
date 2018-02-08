@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="67236de4-5f74-4c3b-b8c3-14f417c94558" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Organization" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config"><con:description>Description : Member Login
+Input : Reads UserName form CreateMember2_Result table
+Output: Generates the 4 step authentication process that confirms that the member login has passed successfully
+
+Results 
+Database  Name : Performance
+Table : MemberLogin_Result
+
+
+</con:description><con:settings><con:setting id="67236de4-5f74-4c3b-b8c3-14f417c94558fileName">Organization</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="groovy" name="X-For" id="d9fe0505-6e62-480c-9889-cfa37b2ae405"><con:settings/><con:config><script>def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+if(env=="CI"){
+
+def xfor = "zillionmgmt-ra-ci.zillion.com"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Kulfi2")
+{
+def xfor="zillionmgmt-ra-kulfi2.zillion.com"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Test"){
+def xfor="zillionmgmt.myzillion.test"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Load")
+{
+def xfor="zillionmgmt.myzillion.load"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}</script></con:config></con:testStep><con:testStep type="datagen" name="autoPathGenerator" id="94d42714-b042-486c-b1a2-2850da6d745a"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def OrganizationData = context.expand( '${#Project#OrganizationData}' )
+
+if(OrganizationData=='win')
+{
+	def path = workspace+"\\V1\\data\\"+project+"Data.xls"
+	return path
+}
+else if(OrganizationData=='mac')
+{
+   def path = workspace+"/V1/data/"+project+"Data.xls"
+	return path
+}
+
+else
+{
+	return OrganizationData
+}</script></con:configuration><con:name>inputPath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def OrganizationResult = context.expand( '${#Project#OrganizationResult}' )
+
+if(OrganizationResult=='win')
+{
+	def path = workspace+"\\Results\\"+env+"\\V1\\"+project+"\\"+project+"Result.csv"
+	return path
+}
+else if(OrganizationResult=='mac')
+{
+	def path = workspace+"/Results/"+env+"/V1/"+project+"/"+project+"Result.csv"
+	return path
+}
+else
+{
+	return OrganizationResult
+}</script></con:configuration><con:name>responsePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def OrganizationResponseTime = context.expand( '${#Project#OrganizationResponseTime}' )
+
+if(OrganizationResponseTime=='win')
+{
+	def path = workspace+"\\ResponseTime\\"+env+"\\V1\\"+project+"\\"+project+"ResponseTime.csv"
+	return path
+}
+else if(OrganizationResponseTime=='mac')
+{
+	def path = workspace+"/ResponseTime/"+env+"/V1/"+project+"/"+project+"ResponseTime.csv"
+	return path
+}
+else
+{
+	return OrganizationResponseTime
+}
+</script></con:configuration><con:name>responseTimePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+return env</script></con:configuration><con:name>worksheetPath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="datasink" name="ResponseTimeHeader" id="05d9b345-1b88-418f-b9b8-ab1a6ff7b4c0"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responseTimePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>false</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>Authenticate User</con:name><con:value>Authenticate User</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>Authenticate Application</con:value></con:property><con:property><con:name>organizationSummary</con:name><con:value>organizationSummary</con:value></con:property><con:property><con:name>Get Organization List</con:name><con:value>Get Organization List</con:value></con:property><con:property><con:name>Get Organization Profile</con:name><con:value>Get Organization Profile</con:value></con:property><con:property><con:name>Get Organization Insurance Summary</con:name><con:value>Get Organization Insurance Summary</con:value></con:property><con:property><con:name>Get Organization Fulfillment Request Logs</con:name><con:value>Get Organization Fulfillment Request Logs</con:value></con:property><con:property><con:name>Get Organization Fulfillment Response Logs</con:name><con:value>Get Organization Fulfillment Response Logs</con:value></con:property><con:property><con:name>Get Organization Insurance Cormorbidities</con:name><con:value>Get Organization Insurance Cormorbidities</con:value></con:property><con:property><con:name>Get Organization Insurance Disqualifications</con:name><con:value>Get Organization Insurance Disqualifications</con:value></con:property><con:property><con:name>Get Organization Picklist</con:name><con:value>Get Organization Picklist</con:value></con:property><con:property><con:name>Get Organization Picklist By Category</con:name><con:value>Get Organization Picklist By Category</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasink" name="csvHeader" id="5e6524f3-0e34-4bf9-b81c-5a8b232ce881"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>false</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>scenario</con:name><con:value>scenario</con:value></con:property><con:property><con:name>userName</con:name><con:value>userName</con:value></con:property><con:property><con:name>organizationId</con:name><con:value>organizationId</con:value></con:property><con:property><con:name>organizationSummary</con:name><con:value>Organization Summary Status</con:value></con:property><con:property><con:name>getOrganizationProfile</con:name><con:value>getOrganizationProfile</con:value></con:property><con:property><con:name>getOrganizationInsuranceSummary</con:name><con:value>getOrganizationInsuranceSummary</con:value></con:property><con:property><con:name>getOrganizationFulfillmentRequestLogs</con:name><con:value>getOrganizationFulfillmentRequestLogs</con:value></con:property><con:property><con:name>getOrganizationFulfillmentResponseLogs</con:name><con:value>getOrganizationFulfillmentResponseLogs</con:value></con:property><con:property><con:name>getOrganizationInsuaranceCormorbidities</con:name><con:value>getOrganizationInsuaranceCormorbidities</con:value></con:property><con:property><con:name>getOrganizationInsuaranceDisqualifications</con:name><con:value>getOrganizationInsuaranceDisqualifications</con:value></con:property><con:property><con:name>getOrganizationPicklist</con:name><con:value>getOrganizationPicklist</con:value></con:property><con:property><con:name>getOrganizationPicklistByCategory</con:name><con:value>getOrganizationPicklistByCategory</con:value></con:property><con:property><con:name>expected</con:name><con:value>expected</con:value></con:property><con:property><con:name>actual</con:name><con:value>actual</con:value></con:property><con:property><con:name>status</con:name><con:value>status</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasource" name="DataSource" id="086c0755-f49c-43c3-88cd-3b98db0fa2c4"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="Excel"><con:configuration><file>${autoPathGenerator#inputPath}</file><worksheet>${autoPathGenerator#worksheetPath}</worksheet><cell>A2</cell><ignoreEmpty>false</ignoreEmpty><evaluateFormulas>false</evaluateFormulas></con:configuration></con:dataSource><con:shared>false</con:shared><con:restartShared>false</con:restartShared><con:property>Scenario</con:property><con:property>UserName</con:property><con:property>Password</con:property><con:property>encryptedPassword</con:property><con:property>filterCriteria</con:property><con:property>searchText</con:property><con:property>pageNumber</con:property><con:property>pageSize</con:property><con:property>sortColumn</con:property><con:property>sortOrder</con:property><con:property>organizationId</con:property><con:property>Category</con:property><con:property>name</con:property><con:property>organizationName</con:property><con:property>orgId</con:property><con:property>expected</con:property><con:startRow/><con:endRow/><con:completeLastOperation>true</con:completeLastOperation><con:trimValues>false</con:trimValues><con:entitizeValues>false</con:entitizeValues><con:restartOnRun>false</con:restartOnRun><con:expandProperties>false</con:expandProperties></con:config></con:testStep><con:testStep type="datagen" name="UniqueOrgID" id="1fcb284e-9208-4f26-91ed-2192c57120e5"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def UTCDate = new java.text.SimpleDateFormat("MMdd")
+Date dNow = new Date(System.currentTimeMillis())
+java.text.SimpleDateFormat UTCTime = new java.text.SimpleDateFormat ("HHmmss");
+UTCTime.setTimeZone(TimeZone.getTimeZone('UTC'))
+def res= (UTCDate.format( new Date())).toString()+(UTCTime.format(dNow)).toString()
+testRunner.testCase.testSteps["Property"].setPropertyValue( "emailid",res.toString()  )
+return res.toString()</script></con:configuration><con:name>UniqueOrgID</con:name><con:mode>STEP</con:mode><con:shared>true</con:shared></con:property></con:config></con:testStep><con:testStep type="datagen" name="currentDate" id="22e0a58f-84cd-4e22-8eb7-757c3742a375"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>//Script created by Love gupta
+def dateTimeFormat = "yyyy-MM-dd"
+//TimeZone.setDefault(TimeZone.0etTimeZone('UTC'))
+def timeZone = TimeZone.getTimeZone('UTC')
+def dateTimeFormatter = new java.text.SimpleDateFormat(dateTimeFormat)
+dateTimeFormatter.setTimeZone(timeZone)
+def myval= dateTimeFormatter.format(new java.util.Date())
+return myval.toString();
+</script></con:configuration><con:name>currentDate</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="groovy" name="timeInUTC" id="5edaba39-1790-43ab-b4a4-f156511f0942"><con:settings/><con:config><script>
+// Scripts Created By Suleena Sharma
+
+// Script 2 -  current date time to UTC Date Time
+
+def testCaseProperty = testRunner.testCase.getTestStepByName( "Property" )
+def dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+def timeZone = TimeZone.getTimeZone('UTC')
+def dateTimeFormatter = new java.text.SimpleDateFormat(dateTimeFormat)
+dateTimeFormatter.setTimeZone(timeZone)
+def myval= dateTimeFormatter.format(new java.util.Date())
+testCaseProperty.setPropertyValue( "UTCDate", myval )
+</script></con:config></con:testStep><con:testStep type="properties" name="Property" id="f14f15bd-0803-4fda-9148-9645375ea677"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>SignatureToken</con:name><con:value>R6NgX+0avhwnDEMgHKnReRWCvBNKFUobolF+zNxL491E5e4qOIMm+u3hkvrWaYGPsejnEKm/Ia1hjg8kPo7IrawMIMqBTx+VDo9aAlhLdZsXRUTBmxONrEdzfbe487NrfAU2J/+IYXrGhtICSfQEOW6U+iuMT/3m5wg6TklD3Hs=</con:value></con:property><con:property><con:name>UTCDate</con:name><con:value>2017-11-22T06:42:32.496Z</con:value></con:property><con:property><con:name>MemberID</con:name><con:value>09</con:value></con:property><con:property><con:name>SignatureToken2</con:name><con:value>KaJpVsjjDqOOVzPIz/W4VHr7KELqSOc+KgwNQB1cSoDevAEVPf8hwKfnd6tZP7QWk9bBiCFqtVOKbAjX+oalSNzTml9FHd/FIA9R+6eUo+kjMXdusl0tC0EgyoFwAL3DJLUNEIZ8y7rwo+EmuMSRTwjd810sclzgLx8vZJuz9gs=</con:value></con:property><con:property><con:name>SignatureToken3</con:name><con:value>KaJpVsjjDqOOVzPIz/W4VHr7KELqSOc+KgwNQB1cSoDevAEVPf8hwKfnd6tZP7QWk9bBiCFqtVOKbAjX+oalSNzTml9FHd/FIA9R+6eUo+kjMXdusl0tC0EgyoFwAL3DJLUNEIZ8y7rwo+EmuMSRTwjd810sclzgLx8vZJuz9gs=</con:value></con:property><con:property><con:name>responseTime</con:name><con:value>1056</con:value></con:property><con:property><con:name>UserName</con:name><con:value/></con:property><con:property><con:name>Prefix</con:name><con:value>01</con:value></con:property><con:property><con:name>message</con:name><con:value>0102Health123</con:value></con:property><con:property><con:name>ResponseCode</con:name><con:value>0</con:value></con:property><con:property><con:name>ProviderID</con:name><con:value>2798F5657535527AE055000000000001</con:value></con:property><con:property><con:name>OrganizationID</con:name><con:value>${DataSource#organizationId}</con:value></con:property><con:property><con:name>FromDate</con:name><con:value>2015-11-01</con:value></con:property><con:property><con:name>ToDate</con:name><con:value>2015-12-30</con:value></con:property><con:property><con:name>Category</con:name><con:value>Preferences</con:value></con:property><con:property><con:name>emailid</con:name><con:value>1122064232</con:value></con:property><con:property><con:name>appName</con:name><con:value>LOGIN</con:value></con:property><con:property><con:name>contentType</con:name><con:value>application/json</con:value></con:property><con:property><con:name>uniqueRequestID</con:name><con:value>01</con:value></con:property><con:property><con:name>applicationName</con:name><con:value>HF OPS PORTAL</con:value></con:property><con:property><con:name>roleName</con:name><con:value>HF OPS</con:value></con:property><con:property><con:name>X-FORWARDED-FOR</con:name><con:value>zillionmgmt-ra-ci.zillion.com</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datagen" name="messageGen" id="45945e12-ae8f-4d6e-a4ed-fe8018f2442b"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>
+
+def prefix = context.expand( '${Property#prefix}' )
+def appName = context.expand( '${Property#AppName}' )
+def orgId = context.expand( '${DataSource#orgId}' )
+
+def userName = context.expand( '${DataSource#UserName}' )
+def password = context.expand( '${DataSource#Password}' )
+def message = prefix+orgId+appName+userName+password
+
+return message.toString()</script></con:configuration><con:name>messageGen</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token" id="57e0a06f-5944-4c76-b891-ed219db56c7f"><con:settings/><con:config service="GST" resourcePath="/api/generateSignatureToken" methodName="GST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token" id="f002278d-406a-4af1-adf5-4360f65637d6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#tokenEndPoints}</con:endpoint><con:request>{
+   "organizationId": "${DataSource#orgId}",
+   "applicationName": "${Property#appName}",
+   "message": "${messageGen#messageGen}"
+}</con:request><con:originalUri>https://provider.myrealappeal.test/api/generateSignatureToken</con:originalUri><con:assertion type="JsonPath Match" id="73653cb9-7534-4004-a7cb-c837703ad39e" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="applicationName" value="${Property#appName}"/>
+  <con:entry key="Content-Type" value="${Property#contentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="8ef1af86-a46e-418d-ac54-a701fcbc1037"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 1" id="af777c7d-71cc-4d25-aa29-8a4728d92318"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>data</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Generate Signature Token</con:sourceStep><con:sourcePath>$.ResponseData</con:sourcePath><con:targetType>SignatureToken</con:targetType><con:targetStep>Property</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer - MemberID" id="c9a2fee1-e95a-4147-a43f-19336695b385"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>roleName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userRolesList[0].roleName</con:sourcePath><con:targetType>roleName</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>memberID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userId</con:sourcePath><con:targetType>MemberID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datagen" name="messageGen1" id="ae14afe5-fded-4137-a568-cec8019bc8d9"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>// Script by Love Gupta
+
+
+def prefix = context.expand( '${Property#prefix}' )
+def appName = context.expand( '${Property#applicationName}' )
+def orgId = context.expand( '${DataSource#orgId}' )
+
+//def providerID = context.expand( '${Property#ProviderID}' )
+def memberID = context.expand( '${Property#MemberID}' )
+ 
+def roleName = context.expand( '${Property#roleName}' )
+def message = prefix+orgId+appName+roleName+memberID
+return message.toString()</script></con:configuration><con:name>messageGen1</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token 2" id="512c7a98-bf44-46f4-8dde-d038bb1e2629"><con:settings/><con:config service="GST" resourcePath="/api/generateSignatureToken" methodName="GST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token 2" id="f002278d-406a-4af1-adf5-4360f65637d6" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#tokenEndPoints}</con:endpoint><con:request>{
+   "organizationId": "${DataSource#orgId}",
+   "applicationName": "${Property#applicationName}",
+   "message": "${messageGen1#messageGen1}"
+}</con:request><con:originalUri>https://provider.myrealappeal.test/api/generateSignatureToken</con:originalUri><con:assertion type="JsonPath Match" id="6f677b2c-13fb-462c-8679-76c8efa786bb" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="applicationName" value="${Property#applicationName}"/>
+  <con:entry key="Content-Type" value="${Property#contentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="8ef1af86-a46e-418d-ac54-a701fcbc1037"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 2" id="421d63b9-585d-4d9e-b78b-7fda87b4a9a2"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>SignatureToken</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Generate Signature Token 2</con:sourceStep><con:sourcePath>$.ResponseData</con:sourcePath><con:targetType>SignatureToken2</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 3" id="5ff3fd24-6e53-4aba-91a4-1bc3516828f2"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>SignatureToken</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate Application</con:sourceStep><con:sourcePath>$.ResponseData.signatureToken</con:sourcePath><con:targetType>SignatureToken3</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>ResponseCode</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate Application</con:sourceStep><con:sourcePath>$.ResponseCode</con:sourcePath><con:targetType>ResponseCode</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="get Organization ID" id="714cd834-1c3e-46c4-a3e7-47257c1cb76d" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>OrganizationID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Get Organization List</con:sourceStep><con:sourcePath>$.ResponseData[0].id</con:sourcePath><con:targetType>OrganizationID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="transfer" name="getCreatedOrganizationID" id="9761e4ad-ada9-4629-a2e2-5317fc8ba5be" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="true"><con:name>ProviderID</con:name><con:sourceType xsi:nil="true"/><con:sourceStep>Create Organization</con:sourceStep><con:sourcePath>$.ResponseData.id</con:sourcePath><con:targetType>ProviderID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datagen" name="status" id="f93447fa-0db2-4b4f-adcc-22ed6c8055de"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def actual = context.expand( '${status#actual}' )
+
+def expected = context.expand( '${DataSource#expected}' )
+
+
+
+if (expected==actual)
+{ 
+def status = "Passed"
+return status.toString();
+}
+else{
+status = "Failed"
+return status.toString();
+}
+
+</script></con:configuration><con:name>status</con:name><con:mode>READ</con:mode><con:shared>false</con:shared></con:property><con:property type="Script">
+    <con:configuration><script><![CDATA[def GetOrganizationList = context.expand( '${Get Organization List#Response#$.ResponseStatus}' )
+//def GetOrganizationProfile = context.expand( '${Get Organization Profile#Response#$.ResponseStatus}' )
+def GetOrganizationInsuranceSummary = context.expand( '${Get Organization Insurance Summary#Response#$.ResponseStatus}' )
+def GetOrganizationFulfillmentRequestLogs = context.expand( '${Get Organization Fulfillment Request Logs#Response#$.ResponseStatus}' )
+def GetOrganizationFulfillmentResponseLogs = context.expand( '${Get Organization Fulfillment Response Logs#Response#$.ResponseStatus}' )
+def GetOrganizationInsuranceCormorbidities = context.expand( '${Get Organization Insurance Cormorbidities#Response#$.ResponseStatus}' )
+def GetOrganizationInsuranceDisqualifications = context.expand( '${Get Organization Insurance Disqualifications#Response#$.ResponseStatus}' )
+def GetOrganizationPicklist = context.expand( '${Get Organization Picklist#Response#$.ResponseStatus}' )
+def CreateOrganization = context.expand( '${Create Organization#Response#$.ResponseStatus}' )
+def GetOrganizationPicklistByCategory = context.expand( '${Get Organization Picklist By Category#Response#$.ResponseStatus}' )
+def organizationSummary = context.expand( '${organizationSummary#Response#$.ResponseStatus}' )
+
+
+if ( (GetOrganizationList=="OK") && (GetOrganizationInsuranceSummary=="OK") && (GetOrganizationFulfillmentRequestLogs=="OK") && (GetOrganizationFulfillmentResponseLogs=="OK") && (GetOrganizationInsuranceCormorbidities=="OK") && (GetOrganizationInsuranceDisqualifications=="OK") && (GetOrganizationPicklist=="OK") && (CreateOrganization=="OK") && (GetOrganizationPicklistByCategory=="OK") && (organizationSummary=="OK"))
+ {
+ 	def Status = 'Passed'
+ 	return Status.toString();
+ }
+ else
+ {
+ 	def Status = 'Failed'
+ 	return Status.toString();
+ }]]></script></con:configuration>
+    <con:name>actual</con:name>
+    <con:mode>STEP</con:mode>
+    <con:shared>false</con:shared>
+  </con:property></con:config></con:testStep><con:testStep type="datasink" name="Collected Data" id="aa2fc104-4b43-4ba5-a93a-01e21a3e6491"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>true</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:shared>false</con:shared><con:properties><con:property><con:name>Scenario</con:name><con:value>${DataSource#Scenario}</con:value></con:property><con:property><con:name>userName</con:name><con:value>${DataSource#UserName}</con:value></con:property><con:property><con:name>organizationId</con:name><con:value>${DataSource#organizationId}</con:value></con:property><con:property><con:name>organizationSummary</con:name><con:value>${organizationSummary#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Profile</con:name><con:value>${Get Organization Profile#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Insurance Summary</con:name><con:value>${Get Organization Insurance Summary#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Fulfillment Request Logs</con:name><con:value>${Get Organization Fulfillment Request Logs#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Fulfillment Response Logs</con:name><con:value>${Get Organization Fulfillment Response Logs#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Insurance Cormorbidities</con:name><con:value>${Get Organization Insurance Cormorbidities#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Insurance Disqualifications</con:name><con:value>${Get Organization Insurance Disqualifications#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Picklist</con:name><con:value>${Get Organization Picklist#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Get Organization Picklist By Category</con:name><con:value>${Get Organization Picklist By Category#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>expected</con:name><con:value>${DataSource#expected}</con:value></con:property><con:property><con:name>actual</con:name><con:value>${status#actual}</con:value></con:property><con:property><con:name>status</con:name><con:value>${status#status}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasink" name="ResponseTime" id="812bc13e-51ac-4a7c-b326-b1f6bf6a8553"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responseTimePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>true</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>Authenticate User</con:name><con:value>${=testRunner.testCase.testSteps["Authenticate User"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>${=testRunner.testCase.testSteps["Authenticate Application"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>organizationSummary</con:name><con:value>${=testRunner.testCase.testSteps["organizationSummary"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization List</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization List"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Profile</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Profile"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Insurance Summary</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Insurance Summary"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Fulfillment Request Logs</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Fulfillment Request Logs"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Fulfillment Response Logs</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Fulfillment Response Logs"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Insurance Cormorbidities</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Insurance Cormorbidities"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Insurance Disqualifications</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Insurance Disqualifications"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Picklist</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Picklist"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Get Organization Picklist By Category</con:name><con:value>${=testRunner.testCase.testSteps["Get Organization Picklist By Category"].testRequest.response.timeTaken}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasourceloop" name="DataSource Loop" id="c262f0f2-4457-47b1-9311-e6c675085ae0"><con:settings/><con:config><dataSourceStep>DataSource</dataSourceStep><targetStep>UniqueOrgID</targetStep></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>3ef213ba-15bc-4443-bffc-db7e6523df12</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>421d63b9-585d-4d9e-b78b-7fda87b4a9a2</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5ff3fd24-6e53-4aba-91a4-1bc3516828f2</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c262f0f2-4457-47b1-9311-e6c675085ae0</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c2ea174c-ac35-409a-9215-3375e28a67a1</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>e9c1bfd2-83c5-47de-89aa-c0f5974c509c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>11b5a7a7-3ad5-4613-b34b-26bc4f0e3a39</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6f49a100-404c-4b25-a240-5a14155b37ad</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8d7b6b1c-f8dd-4a52-81e5-960f56e4c8ae</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>f2106b31-930b-4ebe-9a72-a6f243817080</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>d18e0f68-56fd-423f-9ee0-fe3ccfdb5f28</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c824889c-fdc0-41d6-b0f5-02445677ebe9</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>bef7c7ec-dc7e-4b31-88e8-08c5b60490a6</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>01507004-15a5-4795-bd77-199086065f2f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>aa2fc104-4b43-4ba5-a93a-01e21a3e6491</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5e6524f3-0e34-4bf9-b81c-5a8b232ce881</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5f102b76-fda9-457a-bf94-fb98348ca915</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>f14f15bd-0803-4fda-9148-9645375ea677</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>94d42714-b042-486c-b1a2-2850da6d745a</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>d9fe0505-6e62-480c-9889-cfa37b2ae405</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:environmentSpec><con:entry environmentId="8ef1af86-a46e-418d-ac54-a701fcbc1037"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testCase>
