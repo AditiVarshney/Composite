@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testSuite id="6541af39-2602-4a24-b449-fcfde75dccdd" name="CreateProviderCoach" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="6541af39-2602-4a24-b449-fcfde75dccddfileName">CreateProviderCoach</con:setting></con:settings><con:runType>SEQUENTIAL</con:runType><con:properties/><con:reportParameters/><con:environmentSpec><con:entry environmentId="fac61a8b-491e-4924-a3ea-ac065ad2088f"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testSuite>

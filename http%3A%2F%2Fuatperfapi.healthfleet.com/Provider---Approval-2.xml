@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:resource name="Provider - Approval 2" path="/provider/v1/provider/${Property#ProviderID}/approvedsessiontypes/update" id="f6fbd156-396e-4705-ba8f-53fffe391b1a" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="f6fbd156-396e-4705-ba8f-53fffe391b1afileName">Provider---Approval-2</con:setting></con:settings><con:parameters><con:parameter><con:name>applicationName</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>Content-Type</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>organizationID</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>uniqueRequestId</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>authorizedSignatureToken</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>timeInUTC</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>authorizedUserID</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter><con:parameter><con:name>X-FORWARDED-FOR</con:name><con:value/><con:style>HEADER</con:style><con:default/><con:description xsi:nil="true"/></con:parameter></con:parameters><con:method name="Provider - Approval" id="cc455cc8-1a8a-4a62-86d3-6061b7b4a8b5" method="POST"><con:settings/><con:parameters/><con:representation type="REQUEST"><con:mediaType>application/json</con:mediaType><con:params/></con:representation><con:representation type="FAULT"><con:mediaType>text/html; charset=utf-8</con:mediaType><con:status>400 404</con:status><con:params/><con:element>html</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType>text/plain; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element>data</con:element></con:representation><con:representation type="RESPONSE"><con:mediaType xsi:nil="true"/><con:status>0</con:status><con:params/><con:element>data</con:element></con:representation><con:request name="Provider - Approval" id="d22ca08e-1035-44a5-a3c6-467d2c84db9c" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://devfeature7.zillion.com</con:endpoint><con:request>{
+	"mastHealthProgram": [{"id": "02", name: "RA - Real Appeal",…},…]
+
+"0": {"id": "02", "name": "RA - Real Appeal",…}
+"id": "02"
+"name": "RA - Real Appeal"
+"sessionTypeList": [{"id": "01", "name": "Group",…},
+{"id": "02", "name": "1on1",…}]
+"0": {"id": "01", "name": "Group",…}
+"approvedMhpCoachList": [{"name": null, "id": null, "isDeleted": false, "isApproved": true,…}]
+"0": {"name": null, "id": null, "isDeleted": false, "isApproved": true,…}
+"coachApprovedId": {"id": "${Property#ProviderID}", "name": null}
+"id": null
+"isApproved": true
+"isDeleted": false
+"name": null
+"classification": null
+"id": "01"
+"name": "Group"
+"participationMode": "Group"
+"1": {"id": "02", "name": "1on1",…}
+approvedMhpCoachList: [{name: null, id: null, isDeleted: false, isApproved: true,…}]
+0: {name: null, id: null, isDeleted: false, isApproved: true,…}
+coachApprovedId: {id: "17F83AAAEA14510EE055000000000001", name: null}
+id: null
+isApproved: true
+isDeleted: false
+name: null
+classification: null
+id: "02"
+name: "1on1"
+participationMode: "Individual"
+1: {id: "03", name: "RA - Healthy BMI", sessionTypeList: [{id: "05", name: "Group",…}]}
+id: "03"
+name: "RA - Healthy BMI"
+sessionTypeList: [{id: "05", name: "Group",…}]
+0: {id: "05", name: "Group",…}
+approvedMhpCoachList: [{name: null, id: null, isDeleted: false, isApproved: true,…}]
+classification: null
+id: "05"
+name: "Group"
+participationMode: "Group"
+2: {id: "04", name: "RA - Customization", sessionTypeList: [{id: "13", name: "Customization Session",…}]}
+id: "04"
+name: "RA - Customization"
+sessionTypeList: [{id: "13", name: "Customization Session",…}]
+}</con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="uniqueRequestId" value="01"/>
+  <con:entry key="organizationID" value="02"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="timeInUTC" value="${Property#UTCDate}"/>
+  <con:entry key="authorizedUserID" value="${Property#MemberID}"/>
+  <con:entry key="applicationName" value="MEMBER ONBOARDED PORTAL"/>
+  <con:entry key="Content-Type" value="application/json"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="fac61a8b-491e-4924-a3ea-ac065ad2088f"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:request><con:environmentSpec><con:entry environmentId="fac61a8b-491e-4924-a3ea-ac065ad2088f"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:method><con:environmentSpec><con:entry environmentId="fac61a8b-491e-4924-a3ea-ac065ad2088f"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:resource>
