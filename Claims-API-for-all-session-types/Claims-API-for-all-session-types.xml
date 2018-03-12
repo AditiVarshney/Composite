@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="ec14755b-7512-4e97-8587-128fe89a6060" failOnError="false" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Claims API for all session types" searchProperties="true" timeout="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config"><con:description>Description : Member Login
+Input : Reads UserName form CreateMember2_Result table
+Output: Generates the 4 step authentication process that confirms that the member login has passed successfully
+
+Results 
+Database  Name : Performance
+Table : MemberLogin_Result
+
+
+</con:description><con:settings><con:setting id="ec14755b-7512-4e97-8587-128fe89a6060fileName">Claims-API-for-all-session-types</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="datagen" name="autoPathGenerator" id="6391dc14-3dd6-4134-8d44-6b095f21a28b"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def claimsapi = context.expand( '${#Project#claimsAPIdata}' )
+
+if(claimsapi=='win')
+{
+	def path = workspace+"\\V1\\data\\"+project+"Data.xls"
+	return path
+}
+else if(claimsapi=='mac')
+{
+   def path = workspace+"/V1/data/"+project+"Data.xls"
+	return path
+}
+
+else
+{
+	return claimsapi
+}</script></con:configuration><con:name>inputPath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def claimsapi = context.expand( '${#Project#claimsAPIresponse}' )
+
+if(claimsapi=='win')
+{
+	def path = workspace+"\\Results\\"+env+"\\V1\\"+project+"\\"+project+"Result.csv"
+	return path
+}
+else if(claimsapi=='mac')
+{
+	def path = workspace+"/Results/"+env+"/V1/"+project+"/"+project+"Result.csv"
+	return path
+}
+else
+{
+	return claimsapi
+}</script></con:configuration><con:name>responsePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def TrackerFoodSearchResponseTime = context.expand( '${#Project#TrackerFoodSearchResponseTime}' )
+
+if(TrackerFoodSearchResponseTime=='win')
+{
+	def path = workspace+"\\ResponseTime\\"+env+"\\V1\\"+project+"\\"+project+"ResponseTime.csv"
+	return path
+}
+else if(TrackerFoodSearchResponseTime=='mac')
+{
+	def path = workspace+"/ResponseTime/"+env+"/V1/"+project+"/"+project+"ResponseTime.csv"
+	return path
+}
+else
+{
+	return TrackerFoodSearchResponseTime
+}
+</script></con:configuration><con:name>responseTimePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+return env
+
+
+//def date = context.expand( '${getData#Date}' )
+//return date</script></con:configuration><con:name>worksheetPath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="datasink" name="header" id="a88816af-93f7-4361-90f0-3ee053c02a90"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>false</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:shared>true</con:shared><con:properties><con:property><con:name>Username</con:name><con:value>Username</con:value></con:property><con:property><con:name>AuthenticateUser</con:name><con:value>AuthenticateUser</con:value></con:property><con:property><con:name>AuthenticateApplication</con:name><con:value>AuthenticateApplication</con:value></con:property><con:property><con:name>getAllPrograms</con:name><con:value>getAllPrograms</con:value></con:property><con:property><con:name>Expected</con:name><con:value>Expected</con:value></con:property><con:property><con:name>Actual</con:name><con:value>Actual</con:value></con:property><con:property><con:name>Status</con:name><con:value>Status</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasource" name="getData" id="8fb97c91-2233-4195-a3e2-fd1480d33128"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="Excel"><con:configuration><file>${autoPathGenerator#inputPath}</file><worksheet>${autoPathGenerator#worksheetPath}</worksheet><cell>A2</cell><ignoreEmpty>true</ignoreEmpty><evaluateFormulas>false</evaluateFormulas></con:configuration></con:dataSource><con:property>userName</con:property><con:property>password</con:property><con:property>orgId</con:property><con:property>AuthUserToken</con:property><con:property>AuthAppToken</con:property><con:property>xFor</con:property><con:property>Date</con:property><con:property>Expected</con:property><con:startRow>0</con:startRow><con:endRow>0</con:endRow><con:recordsPerIteration>1</con:recordsPerIteration><con:completeLastOperation>true</con:completeLastOperation><con:trimValues>false</con:trimValues><con:entitizeValues>false</con:entitizeValues><con:restartOnRun>true</con:restartOnRun><con:expandProperties>false</con:expandProperties></con:config></con:testStep><con:testStep type="groovy" name="timeInUTC" id="d3c8985a-2d18-42d0-b647-d133e397759f"><con:settings/><con:config><script>// Scripts Created By Suleena Sharma
+// Do Not Modify 
+
+def testCaseProperty = testRunner.testCase.getTestStepByName( "Property" )
+def dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+def timeZone = TimeZone.getTimeZone('UTC')
+def dateTimeFormatter = new java.text.SimpleDateFormat(dateTimeFormat)
+dateTimeFormatter.setTimeZone(timeZone)
+def myval= dateTimeFormatter.format(new java.util.Date())
+testCaseProperty.setPropertyValue( "UTCDate", myval) 
+log.info(myval)
+//End of Script - DO NOT TOUCH</script></con:config></con:testStep><con:testStep type="properties" name="Property" id="484be929-79e3-47cc-a4ea-c0ebdffec8d9"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>SignatureToken</con:name><con:value>UqkS1Ldj7r3HeCf31VSHIS4r1JAErYKQYTu84LnfidIxCHKZkyGnFOSPWPqi4fds3UyWu2bi22+c0CNiJdx2CCRr01SRmuE2vlikvUAtn70sLyN+72cIrS18h3dBf8egz6xKugxnstQTFvB8zsBKfvIIR5fOyDko2vCFOsFkAv0=</con:value></con:property><con:property><con:name>UTCDate</con:name><con:value>2017-12-22T06:56:34.195Z</con:value></con:property><con:property><con:name>MemberID</con:name><con:value>0F5EB3252DF95DE0E050C90A5A8E56C0</con:value></con:property><con:property><con:name>SignatureToken2</con:name><con:value>kkRgDZUgdB+IpTAFPtoyGl+egQqgWmuItXBbkx3gundXcWpLcNwHj1HD39Un/MGZgws0fqvJQS4w+wcTc7yFmqTAC7I0BciG3VZYrPIPajEuifsFFN3Tot2Er1V+FXk72jI9ziCm8NtPnxEQc5P6KTf9LAuWmLnVRXBrUM3M15c=</con:value></con:property><con:property><con:name>SignatureToken3</con:name><con:value>X00GhYqn5zaVDExHPcIED2+PYjM/eHGoYY9FABoMIAMKEBUfQ6JZqUAT/AAEJoAGn0yV4k4vSf3RADZFy2F4CGBRGdk/69tpBvQKqwHcFOCx+PTHGAei3Jbx9creoDitOhLsTIqM6651Y7biLwsHvXgOvaFP8GncSkZIpW4ko/Y=</con:value></con:property><con:property><con:name>responseTime</con:name><con:value>1056</con:value></con:property><con:property><con:name>UserName</con:name><con:value>Load487@yopmail.com</con:value></con:property><con:property><con:name>Prefix</con:name><con:value>0102</con:value></con:property><con:property><con:name>message</con:name><con:value>0102Load487@yopmail.comHealthfleet2015</con:value></con:property><con:property><con:name>ResponseCode</con:name><con:value>0</con:value></con:property><con:property><con:name>ProviderID</con:name><con:value>09</con:value></con:property><con:property><con:name>EventID</con:name><con:value/></con:property><con:property><con:name>PageNum</con:name><con:value>11</con:value></con:property><con:property><con:name>TodayDate</con:name><con:value>20151123</con:value></con:property><con:property><con:name>OrganizationID</con:name><con:value>0301</con:value></con:property><con:property><con:name>MemberToken</con:name><con:value/></con:property><con:property><con:name>getMemberSignatureToken</con:name><con:value>bLhRpMAzo6JAYsYwS5o/j8sOBFvwpHqx1IP0nKZ8px0M0imGuuef4ozGXeYToZedzN0NBgKdmPzwbiAa+FBOcjqGD5HBKIaPuKZOZBrpFS2ebPMFjDqPNcp6GVWG6TGRnBX3RzNOTa54bpRoZg04AhMM4lGIbWVmAoDBU4V/Bxw=</con:value></con:property><con:property><con:name>newMemberID</con:name><con:value>487A2AEB28C92814E0530100007F37DD</con:value></con:property><con:property><con:name>memberActivationToken</con:name><con:value>NDg3QTJBRUIyOEM5MjgxNEUwNTMwMTAwMDA3RjM3REQ6MTQ4NzA2MDE1NDAzMw==</con:value></con:property><con:property><con:name>firstName</con:name><con:value>apimem0214081633</con:value></con:property><con:property><con:name>Email</con:name><con:value>apimem0214081633</con:value></con:property><con:property><con:name>createdMemPwd</con:name><con:value>Password1</con:value></con:property><con:property><con:name>physician</con:name><con:value>{"id":"330ACF664CB02AF0E0530100007F4F86","firstName":"api.prac200","lastName":"prac","name":"api.prac200 prac","organizationId":{"id":"0301","organizationName":"Apollo Endo"},"userRoleId":{"id":"13","roleName":"PRACTITIONER"},"isActive":true,"systemUserSummaryList":[{"id":"330ACF664CB12AF0E0530100007F4F86","unreadMessageCount":null,"loginCount":5,"lastLoginDateUtc":"2016-06-22","lastPriorLoginDateUtc":"2016-06-01"}]}</con:value></con:property><con:property><con:name>applicationName</con:name><con:value>LOGIN</con:value></con:property><con:property><con:name>Content-Type</con:name><con:value>application/json</con:value></con:property><con:property><con:name>uniqueId</con:name><con:value>01</con:value></con:property><con:property><con:name>appicationList</con:name><con:value>EXTERNAL SYSTEM UHC PORTAL</con:value></con:property><con:property><con:name>roleName</con:name><con:value>EXTERNAL SYSTEM UHC</con:value></con:property><con:property><con:name>orgDetails</con:name><con:value>{"id":"0301","organizationName":"Apollo Endo","organizationType":"Agent","status":"Active","parentOrganizationIds":"06","parentOrganizationId":"06","parentOrganizationName":"Zillion","parentOrganizationType":"Root","parentOrganizationStatus":"Active","organizationCode":"APOLLO"}</con:value></con:property><con:property><con:name>orgCode</con:name><con:value>APOLLO</con:value></con:property><con:property><con:name>orgId</con:name><con:value>0301</con:value></con:property><con:property><con:name>memOrgId</con:name><con:value>0301</con:value></con:property><con:property><con:name>programDetail</con:name><con:value>{"name":"Orbera Program: Post-placement for 52 weeks","id":"30100AA52BEA","programName":"Orbera Program: Post-placement for 52 weeks","isDeleted":false,"term":"52 Days","programDescription":"Orbera Program: Post-placement for 52 weeks","organization":{"id":"0301","name":"Apollo Endo","parentOrganizationId":"06","parentOrganizationIds":"06"},"publishedDt":"2015-01-01","expirationDt":"2099-01-01","termDurationUnits":"Days","termDurationLength":52,"isActive":true,"isOnboardingProgram":false,"active":true,"onboardingProgram":false}</con:value></con:property><con:property><con:name>programId</con:name><con:value>30100AA52BEA</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="TokenGeneratorKulfi" id="6b4172cc-96cc-4d9a-bb38-249d70cb60ff" disabled="true"><con:settings/><con:config><script>//def String1 = ""dev202EXTERNAL SYSTEM UHC PORTALEXTERNAL SYSTEM UHC3D070050BA764E56E0530100007""
+import TokenGeneratorKulfi;
+log.info(TokenGeneratorKulfi.main();
+//def command = "java TokenGeneratorKulf dev1302LOGINuhc.user1@healthfleet.comHealthfleet2015"
+//def process = command.execute()
+//process.waitFor()
+//
+//def output = process.in.text
+//log.info output
+</script></con:config></con:testStep><con:testStep type="datagen" name="Gen" id="c04af856-0499-4878-8846-51ca0730402d" disabled="true"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Number"><con:configuration><start>1</start><end>100</end><step>1</step><pattern/><random>false</random><persist>true</persist><current>65.0</current></con:configuration><con:name>ID</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token" id="d31f867c-9943-4729-89fb-86d4d1b50d58" disabled="true"><con:settings/><con:config service="generateSignatureTokenEndpoint" resourcePath="/api/generateSignatureToken" methodName="GenerateSignatureToken" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token" id="c916e4cc-0f76-42b6-8cfc-e80bb1c04f3b" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:request>{
+   "organizationId": "${getData#orgId}",
+   "applicationName": "${Property#applicationName}",
+   "message": "${Property#uniqueId}${getData#orgId}${Property#applicationName}${getData#userName}${getData#password}"
+}</con:request><con:originalUri>https://provider.myorbera.test/generateSignatureTokenEndpoint</con:originalUri><con:assertion type="JsonPath Match" id="6fb34cb3-0553-42c5-8ca4-4754088d5be9" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value=" ${getData#orgId}"/>
+  <con:entry key="applicationName" value="${Property#applicationName}"/>
+  <con:entry key="Content-Type" value="${Property#Content-Type}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry><con:entry environmentId="0b2382bd-0871-41cf-a6ea-0c5d427480ef"><con:authProfile>No Authorization</con:authProfile></con:entry><con:entry environmentId="b09a2681-2efc-4893-92ce-7e5c4b76f212"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 1" id="ba8dc0dc-4a43-4986-88ad-61fd9bde4870" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" entitize="false" ignoreEmpty="false" transferChildNodes="false"><con:name>data</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Generate Signature Token</con:sourceStep><con:sourcePath>$.ResponseData</con:sourcePath><con:targetType>SignatureToken</con:targetType><con:targetStep>Property</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Authenticate User" id="f082b0a1-d3a1-4d37-b677-2c6942f2058d"><con:settings/><con:config service="EnvEndpoint" resourcePath="/auth/v1/authenticateuser" methodName="Authenticate User" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Authenticate User" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${getData#endpoint}</con:endpoint><con:request>{
+   "username": "${getData#userName}",
+   "password": "${getData#password}",
+   "timeOfRequestInUTC": "${Property#UTCDate}"
+}</con:request><con:originalUri>http://uatperfapi.healthfleet.com/</con:originalUri><con:assertion type="GroovyScriptAssertion" id="b6b3e453-b7c1-40e7-9658-3e24ee226b17" name="Authenticate User Failed"><con:configuration><scriptText>// Script Created by Suleena Sharma
+// Validate Response Value - Member Login w Authentication
+import com.eviware.soapui.support.XmlHolder
+def groovyutils= new com.eviware.soapui.support.GroovyUtils(context)
+//def holder= new XmlHolder(messageExchange.responseContentAsXml)
+//def response = context.expand( '${Create Member#Response#$.ResponseStatus}' )
+def responsedata = context.expand( '${Authenticate User#Response#$.ResponseData}' )
+
+def flag = 0;
+if  ((responsedata != '') &amp;&amp; (responsedata != '[]'))
+{
+	flag = 1;
+}
+
+if (flag == 1)
+assert true
+else 
+assert false
+</scriptText></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="275141a2-65d4-49f2-9978-bf9e619c7554" name="JsonPath Match"><con:configuration><path>$.ResponseMessage</path><content>Successful Api Request</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="uniqueRequestId" value="dev13"/>
+  <con:entry key="authorizedSignatureToken" value="${getData#AuthUserToken}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${getData#xFor}"/>
+  <con:entry key="TimeinUTC" value="${Property#UTCDate}"/>
+  <con:entry key="OrganizationID" value="${getData#orgId}"/>
+  <con:entry key="applicationName" value="${Property#applicationName}"/>
+  <con:entry key="Content-Type" value="${Property#Content-Type}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>TimeinUTC</con:entry><con:entry>OrganizationID</con:entry><con:entry>uniqueRequestId</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry><con:entry environmentId="0b2382bd-0871-41cf-a6ea-0c5d427480ef"><con:authProfile>No Authorization</con:authProfile></con:entry><con:entry environmentId="b09a2681-2efc-4893-92ce-7e5c4b76f212"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer - ProviderID" id="64266976-0669-489d-b894-e088d4e7df69"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>MemberID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userId</con:sourcePath><con:targetType>MemberID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>applicationList</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userRolesList[0].applicationsList[0]</con:sourcePath><con:targetType>appicationList</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>roleName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userRolesList[0].roleName</con:sourcePath><con:targetType>roleName</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false" disabled="false"><con:name>signatureToken2</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.signatureToken</con:sourcePath><con:targetType>SignatureToken2</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token 2" id="5c64bb9c-b5d2-4e27-82b1-cd47aaf7146e" disabled="true"><con:settings/><con:config service="generateSignatureTokenEndpoint" resourcePath="/api/generateSignatureToken" methodName="GenerateSignatureToken" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token 2" id="c916e4cc-0f76-42b6-8cfc-e80bb1c04f3b" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:request>{
+   "organizationId": "${getData#orgId}",
+   "applicationName": "${Property#appicationList}",
+   "message": "${Property#uniqueId}${getData#orgId}${Property#appicationList}${Property#roleName}${Property#MemberID}"
+}</con:request><con:originalUri>https://provider.myorbera.test/api/generateSignatureToken</con:originalUri><con:assertion type="JsonPath Match" id="abf19e26-4234-4ea8-9ac6-bd5b8baf89e7" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value=" ${getData#orgId}"/>
+  <con:entry key="applicationName" value="${Property#appicationList}"/>
+  <con:entry key="Content-Type" value="{Property#Content-Type}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry><con:entry environmentId="0b2382bd-0871-41cf-a6ea-0c5d427480ef"><con:authProfile>No Authorization</con:authProfile></con:entry><con:entry environmentId="b09a2681-2efc-4893-92ce-7e5c4b76f212"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 2" id="76987fdc-8529-461c-915c-92dbbe3a5dae" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>SignatureToken</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$['ResponseData']['signatureToken']</con:sourcePath><con:targetType>SignatureToken2</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Authenticate Application" id="d3945ac2-c6d5-4f2a-8b57-4bed70b176fb"><con:settings/><con:config service="EnvEndpoint" resourcePath="/auth/v1/authenticateapplication" methodName="Authenticate Application" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Authenticate Application" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${getData#endpoint}</con:endpoint><con:request>{
+"timeOfRequestInUTC":"${Property#UTCDate}"
+}
+</con:request><con:originalUri>http://uatapi.healthfleet.com/auth/v1/authenticateapplication</con:originalUri><con:assertion type="GroovyScriptAssertion" id="77e1fc68-8a56-4d86-be35-527b66591764" name="Authenticate Application"><con:configuration><scriptText>// Script Created by Suleena Sharma
+// Validate Response Value - Member Login w Authentication
+import com.eviware.soapui.support.XmlHolder
+def groovyutils= new com.eviware.soapui.support.GroovyUtils(context)
+//def holder= new XmlHolder(messageExchange.responseContentAsXml)
+//def response = context.expand( '${Create Member#Response#$.ResponseStatus}' )
+def responsedata = context.expand( '${Authenticate Application#Response#$.ResponseData}' )
+
+def flag = 0;
+if  ((responsedata != '') &amp;&amp; (responsedata != '[]'))
+{
+	flag = 1;
+}
+
+if (flag == 1)
+assert true
+else 
+assert false
+</scriptText></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="b5e79971-9f51-4b71-bd83-e533effa18fc" name="JsonPath Match"><con:configuration><path>$.ResponseMessage</path><content>Successful Api Request</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="uniqueRequestId" value="dev2"/>
+  <con:entry key="authorizedSignatureToken" value="${getData#AuthAppToken}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${getData#xFor}"/>
+  <con:entry key="authorizedUserID" value="${Property#MemberID}"/>
+  <con:entry key="TimeinUTC" value="${Property#UTCDate}"/>
+  <con:entry key="OrganizationID" value="${getData#orgId}"/>
+  <con:entry key="authorizedUserName" value="${getData#userName}"/>
+  <con:entry key="applicationName" value="${Property#appicationList}"/>
+  <con:entry key="Content-Type" value="${Property#Content-Type}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>TimeinUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>authorizedUserName</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>OrganizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry><con:entry environmentId="0b2382bd-0871-41cf-a6ea-0c5d427480ef"><con:authProfile>No Authorization</con:authProfile></con:entry><con:entry environmentId="b09a2681-2efc-4893-92ce-7e5c4b76f212"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 3" id="eab27c03-4ac1-4e57-9076-de2376a624d3"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>ResponseCode</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate Application</con:sourceStep><con:sourcePath>$.ResponseCode</con:sourcePath><con:targetType>ResponseCode</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>SignatureToken3</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate Application</con:sourceStep><con:sourcePath>$.ResponseData.signatureToken</con:sourcePath><con:targetType>SignatureToken3</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="getAllPrograms" id="01760c97-b265-4c7c-bed3-8b38cbd6fa24"><con:settings/><con:config service="EnvEndpoint" resourcePath="/extsys/v2/programs/{extSysInsProgramCode}/date/{Date}" methodName="programs/RA/date" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="getAllPrograms" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${getData#endpoint}</con:endpoint><con:request>{
+"timeOfRequestInUTC":"${Property#UTCDate}"
+}
+</con:request><con:originalUri>http://uatapi.healthfleet.com/auth/v1/authenticateapplication</con:originalUri><con:assertion type="GroovyScriptAssertion" id="77e1fc68-8a56-4d86-be35-527b66591764" name="Authenticate Application"><con:configuration><scriptText>// Script Created by Suleena Sharma
+// Validate Response Value - Member Login w Authentication
+import com.eviware.soapui.support.XmlHolder
+def groovyutils= new com.eviware.soapui.support.GroovyUtils(context)
+//def holder= new XmlHolder(messageExchange.responseContentAsXml)
+//def response = context.expand( '${Create Member#Response#$.ResponseStatus}' )
+def responsedata = context.expand( '${Authenticate Application#Response#$.ResponseData}' )
+
+def flag = 0;
+if  ((responsedata != '') &amp;&amp; (responsedata != '[]'))
+{
+	flag = 1;
+}
+
+if (flag == 1)
+assert true
+else 
+assert false
+</scriptText></con:configuration></con:assertion><con:assertion type="JsonPath Match" id="b5e79971-9f51-4b71-bd83-e533effa18fc" name="JsonPath Match"><con:configuration><path>$.ResponseMessage</path><content>Successful Api Request</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="pageNumber" value="0"/>
+  <con:entry key="UniqueRequestID" value="${Property#uniqueId}"/>
+  <con:entry key="pageSize" value="100000"/>
+  <con:entry key="Date" value="2017-11-16"/>
+  <con:entry key="organizationID" value="${getData#orgId}"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueId}"/>
+  <con:entry key="authorizedSignatureToken" value="${getData#AuthAppToken}"/>
+  <con:entry key="extSysInsProgramCode" value="RA"/>
+  <con:entry key="X-FORWARDED-FOR" value="${getData#xFor}"/>
+  <con:entry key="authorizedUserID" value="${Property#MemberID}"/>
+  <con:entry key="TimeinUTC" value="${Property#UTCDate}"/>
+  <con:entry key="authorizedUserName" value="${getData#userName}"/>
+  <con:entry key="applicationName" value="${Property#appicationList}"/>
+  <con:entry key="Content-Type" value="${Property#Content-Type}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>TimeinUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>authorizedUserName</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>UniqueRequestID</con:entry><con:entry>pageNumber</con:entry><con:entry>pageSize</con:entry><con:entry>Date</con:entry><con:entry>extSysInsProgramCode</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry><con:entry environmentId="0b2382bd-0871-41cf-a6ea-0c5d427480ef"><con:authProfile>No Authorization</con:authProfile></con:entry><con:entry environmentId="b09a2681-2efc-4893-92ce-7e5c4b76f212"><con:authProfile>No Authorization</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="getMemberID" id="35982aa8-b04d-4b8f-b316-72092518f898" disabled="true"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>MemberID</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate Application</con:sourceStep><con:sourcePath>$.ResponseData.userId</con:sourcePath><con:targetType>MemberID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datagen" name="statusGen" id="5d778b27-460f-4a2d-be85-36b5bdb06ef8"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def AuthenticateUser = context.expand( '${Authenticate User#Response#$.ResponseStatus}' )
+def AuthenticateApplication = context.expand( '${Authenticate Application#Response#$.ResponseStatus}' )
+def getAllPrograms = context.expand( '${getAllPrograms#Response#$.ResponseStatus}' )
+
+
+
+if ((AuthenticateUser=="OK") &amp;&amp; (AuthenticateApplication=="OK") &amp;&amp; (getAllPrograms=="OK"))
+{
+	def res = "Passed"
+	return res.toString()
+}
+else
+{
+	def res="Failed"
+	return res.toString()
+}
+</script></con:configuration><con:name>Actual</con:name><con:mode>READ</con:mode><con:shared>true</con:shared></con:property><con:property type="Script"><con:configuration><script>def expected = context.expand( '${getData#Expected}' )
+def actual = context.expand( '${statusGen#Actual}' )
+
+def res = "Failed"
+if (expected==actual)
+{
+	 res = "Passed"
+	return res.toString()
+}
+
+return res.toString()</script></con:configuration><con:name>Status</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="datasink" name="Collected Data" id="74f35702-be65-4e79-814d-86ed505c6f29"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>true</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:shared>true</con:shared><con:properties><con:property><con:name>Username</con:name><con:value>${getData#userName}</con:value></con:property><con:property><con:name>AuthenticateUser</con:name><con:value>${Authenticate User#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>AuthenticateApplication</con:name><con:value>${Authenticate Application#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>getAllPrograms</con:name><con:value>${getAllPrograms#Response#$.ResponseStatus}</con:value></con:property><con:property><con:name>Expected</con:name><con:value>${getData#Expected}</con:value></con:property><con:property><con:name>Actual</con:name><con:value>${statusGen#Actual}</con:value></con:property><con:property><con:name>Status</con:name><con:value>${statusGen#Status}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasourceloop" name="DataSource Loop" id="22e4e5ba-7995-4ee7-abdc-008957ac703c"><con:settings/><con:config><dataSourceStep>getData</dataSourceStep><targetStep>timeInUTC</targetStep></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>abb8cd8c-87aa-41df-83c5-92cfab37271a</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>3ef213ba-15bc-4443-bffc-db7e6523df12</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c74b51f5-f16c-47d8-bb2d-4070233ae502</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>421d63b9-585d-4d9e-b78b-7fda87b4a9a2</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5ff3fd24-6e53-4aba-91a4-1bc3516828f2</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>af777c7d-71cc-4d25-aa29-8a4728d92318</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>f14f15bd-0803-4fda-9148-9645375ea677</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c9a2fee1-e95a-4147-a43f-19336695b385</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>1164260f-17a4-410c-b0ae-12d41968a16d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>b2ce5082-c2c2-46b3-b3e8-910c7282d94b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c89aa3cb-d867-404c-8d33-bae9dc9613ac</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>7493dcfd-c204-47d2-bb60-eb68957fa1b7</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>1b8fa7d2-d598-4360-a3e2-e07086b7674c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>c69f7a76-77f7-4871-b06c-0a1a892a08b3</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>437e8565-c564-49cf-98db-a04a68854e1c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>0876bb01-aa9f-46dd-a693-762c1fc91c11</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8d7ac91d-fc37-43bb-860a-c8d2735e9f0d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>b77d41f7-dc95-434c-920f-865c595421d8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>caa194c7-1ab4-4a51-95cd-6dc9f8dc2ad0</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>29c1938a-6f1a-44db-a47c-7d862e810429</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>693dbcd4-ecbb-4ac8-9ab5-8f52a657f142</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6b3dc96d-f0a4-455d-b5f2-90b3c56661ab</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>353c651c-dc1e-41f8-b340-8c59a41c8470</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>a56d8bf7-b79c-4db2-9254-34f17f2d4c10</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>b4cac027-6318-4e46-bcaf-2795bb48b28b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>e530676c-4d64-4f31-bd6a-0cc1bf7b21e8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8d355ccc-5fec-4302-81b5-188bd43b5ce8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>4d6eb4c8-4ea6-466c-9e64-4bca6c72e4ac</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>4cbe8c22-fd7f-4055-b34a-06b7f7ea9d14</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>f81476d3-fad5-4774-b86c-52e013582a0b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>a70ebd39-c844-4491-8b11-488e5a0af2e5</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>14df99fa-c4bc-4bea-ab56-e01424a7c923</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>36c3de15-7d2b-4539-9f71-63e85ea04fd9</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>3fcadc43-577f-49d1-8d1f-eebbb6a41b8d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6cf3d637-5c41-4353-a654-359577dce6a4</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>01760c97-b265-4c7c-bed3-8b38cbd6fa24</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6391dc14-3dd6-4134-8d44-6b095f21a28b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>a88816af-93f7-4361-90f0-3ee053c02a90</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:environmentSpec><con:entry environmentId="ebe6c5aa-0fb0-4d52-b385-f567f8ca23e9"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testCase>
