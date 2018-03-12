@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:testCase id="013b620c-cf22-4b42-911a-8af2e2ecc4e5" discardOkResults="true" failOnError="false" failTestCaseOnErrors="true" keepSession="false" name="AddCoachAvailability" searchProperties="true" timeout="0" maxResults="0" wsrmEnabled="false" wsrmVersion="1.0" wsrmAckTo="" amfAuthorisation="false" amfEndpoint="" amfLogin="" amfPassword="" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="IncludeOverview">true</con:setting><con:setting id="IncludeResults">true</con:setting><con:setting id="FlowLayout">false</con:setting><con:setting id="ErrorDetails">true</con:setting><con:setting id="IncludeCoverage">true</con:setting><con:setting id="013b620c-cf22-4b42-911a-8af2e2ecc4e5fileName">AddCoachAvailability</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="groovy" name="X-For" id="661c4662-3952-4826-8f9b-6b6c107f3c6e"><con:settings/><con:config><script>def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+if(env=="CI"){
+
+def xfor = "provider-ra-ci.zillion.com"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Kulfi2")
+{
+def xfor="provider-ra-kulfi2.zillion.com"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Test"){
+def xfor="provider-ra-test.zillion.com"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}
+else if(env=="Load")
+{
+def xfor="provider.myrealappeal.load"
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
+}</script></con:config></con:testStep><con:testStep type="datagen" name="autoPathGenerator" id="2895b688-e39c-4bb8-b8f7-6dbafbdba2bb"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def AddCoachAvailabilityData = context.expand( '${#Project#AddCoachAvailabilityData}' )
+
+if(AddCoachAvailabilityData=='win')
+{
+	def path = workspace+"\\V1\\data\\"+project+"Data.xls"
+	return path
+}
+else if(AddCoachAvailabilityData=='mac')
+{
+   def path = workspace+"/V1/data/"+project+"Data.xls"
+	return path
+}
+else
+{
+	return AddCoachAvailabilityData
+}</script></con:configuration><con:name>inputPath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+//return workspace
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def AddCoachAvailabilityResult = context.expand( '${#Project#AddCoachAvailabilityResult}' )
+
+if(AddCoachAvailabilityResult=='win')
+{
+	def path = workspace+"\\Results\\"+env+"\\V1\\"+project+"\\"+project+"Result.csv"
+	return path
+}
+else if(AddCoachAvailabilityResult=='mac')
+{
+	def path = workspace+"/Results/"+env+"/V1/"+project+"/"+project+"Result.csv"
+	return path
+}
+else
+{
+	return AddCoachAvailabilityResult
+}</script></con:configuration><con:name>responsePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def workspace = context.expand('${workspaceDir}')
+def env = testRunner.testCase.testSuite.project.activeEnvironment.name
+def project = testRunner.testCase.testSuite.project.name
+def AddCoachAvailabilityResponseTime = context.expand( '${#Project#AddCoachAvailabilityResponseTime}' )
+
+if(AddCoachAvailabilityResponseTime=='win')
+{
+	def path = workspace+"\\ResponseTime\\"+env+"\\V1\\"+project+"\\"+project+"ResponseTime.csv"
+	return path
+}
+else if(AddCoachAvailabilityResponseTime=='mac')
+{
+	def path = workspace+"/ResponseTime/"+env+"/V1/"+project+"/"+project+"ResponseTime.csv"
+	return path
+}
+else
+{
+	return AddCoachAvailabilityResponseTime
+}
+</script></con:configuration><con:name>responseTimePath</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="datasink" name="ResponseTimeHeader" id="5bdba2c1-5c3d-4422-8736-f96da5d156a4"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responseTimePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>false</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>Generate Signature Token</con:name><con:value>Generate Signature Token</con:value></con:property><con:property><con:name>Authenticate User</con:name><con:value>Authenticate User</con:value></con:property><con:property><con:name>Generate Signature Token 2</con:name><con:value>Generate Signature Token 2</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>Authenticate Application</con:value></con:property><con:property><con:name>providerProfile</con:name><con:value>providerProfile</con:value></con:property><con:property><con:name>events</con:name><con:value>events</con:value></con:property><con:property><con:name>availability</con:name><con:value>availability</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasink" name="csvHeader2" id="4a667a23-43c3-45bc-b68e-bb302eef57c6"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>false</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>scenario</con:name><con:value>scenario</con:value></con:property><con:property><con:name>userName</con:name><con:value>userName</con:value></con:property><con:property><con:name>startTime</con:name><con:value>startTime</con:value></con:property><con:property><con:name>EndTime</con:name><con:value>EndTime</con:value></con:property><con:property><con:name>EndDate</con:name><con:value>EndDate</con:value></con:property><con:property><con:name>isRecurring</con:name><con:value>isRecurring</con:value></con:property><con:property><con:name>frequencyDaysOfWeek</con:name><con:value>frequencyDaysOfWeek</con:value></con:property><con:property><con:name>Authenticate User</con:name><con:value>Authenticate User</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>Authenticate Application</con:value></con:property><con:property><con:name>providerProfile</con:name><con:value>providerProfile</con:value></con:property><con:property><con:name>events</con:name><con:value>events</con:value></con:property><con:property><con:name>availability</con:name><con:value>availability</con:value></con:property><con:property><con:name>expected</con:name><con:value>expected</con:value></con:property><con:property><con:name>actual </con:name><con:value>actual </con:value></con:property><con:property><con:name>status</con:name><con:value>status</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="jdbc" name="JDBC Request" id="21ce08b6-4a34-4a82-9ebb-130c1e8698e1"><con:settings><con:setting id="prettyPrintResponse">true</con:setting></con:settings><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dbConnectionName>mySqlConnection</con:dbConnectionName><con:driver>oracle.jdbc.driver.OracleDriver</con:driver><con:connectionString>jdbc:oracle:thin:PROMETHEUS_DB_DEMO/PASS_VALUE@test-qa.c2nmjbfxq71p.us-east-1.rds.amazonaws.com:1521:SYSTEST</con:connectionString><con:password>PromDbDemo_12c_ST</con:password><con:connectionProperties/><con:query>select EMAIL,ID from PROVIDER where EMAIL ='AditiCoach17@yopmail.com'</con:query><con:assertion type="JDBC Status" id="0e5327d5-dc1f-4d8c-a5b4-46e4dc9b043a" name="JDBC Status"/><con:properties/></con:config></con:testStep><con:testStep type="jdbc" name="DeleteData" id="7c1db181-056f-4028-b574-fb4381491253"><con:settings><con:setting id="prettyPrintResponse">true</con:setting></con:settings><con:config xsi:type="con:JdbcRequestTestStep" convertColumnNamesToUpperCase="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dbConnectionName>mySqlConnection</con:dbConnectionName><con:driver>oracle.jdbc.driver.OracleDriver</con:driver><con:connectionString>jdbc:oracle:thin:PROMETHEUS_DB_DEMO/PASS_VALUE@test-qa.c2nmjbfxq71p.us-east-1.rds.amazonaws.com:1521:SYSTEST</con:connectionString><con:password>PromDbDemo_12c_ST</con:password><con:connectionProperties/><con:query/><con:properties/></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="912c8663-43bd-439b-a9f4-7d0ae291b499"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>Email</con:name><con:sourceType>ResponseAsXml</con:sourceType><con:sourceStep>JDBC Request</con:sourceStep><con:sourcePath>//Results[1]/ResultSet[1]/Row[1]/EMAIL[1]</con:sourcePath><con:targetType>UserName</con:targetType><con:targetStep>Property</con:targetStep><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datasource" name="DataSource" id="1a7d680c-80c7-474c-b25a-304b79c693f4"><con:settings/><con:config xsi:type="con:DataSourceStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSource type="Excel"><con:configuration><file>${autoPathGenerator#inputPath}</file><worksheet>Sheet1</worksheet><cell>A2</cell><ignoreEmpty>true</ignoreEmpty><evaluateFormulas>false</evaluateFormulas></con:configuration></con:dataSource><con:property>Scenario</con:property><con:property>UserName</con:property><con:property>availableforthetime</con:property><con:property>NumberOfdays</con:property><con:property>startTime</con:property><con:property>EndTime</con:property><con:property>password</con:property><con:property>orgId</con:property><con:property>eventTypes</con:property><con:property>timeZone</con:property><con:property>sessionStatus</con:property><con:property>eventType</con:property><con:property>frequencyDaysOfWeek</con:property><con:property>isRecurring</con:property><con:property>expected</con:property><con:startRow/><con:endRow/><con:recordsPerIteration>1</con:recordsPerIteration><con:completeLastOperation>true</con:completeLastOperation><con:trimValues>false</con:trimValues><con:entitizeValues>false</con:entitizeValues><con:restartOnRun>false</con:restartOnRun><con:expandProperties>false</con:expandProperties></con:config></con:testStep><con:testStep type="properties" name="Property" id="49bc44e3-a0ee-4ca3-bf7e-8567b71998a0"><con:settings/><con:config xsi:type="con:PropertiesStep" saveFirst="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:properties><con:property><con:name>SignatureToken</con:name><con:value>Z65IM/m6lBUbo/lqxmSjtrHdJoOoU23K8ge3V9AQ90EferOXjWaSqWRi4hKlzMFeIZx2e5Orx9xettTLM7nZKqff/UTKsTuwM4SGuH3MG/tl0Yzah8DUN3vi5ffDScPs18W8/31p5xcdhThy7synI9LN+uW1uGkMfrFOQF3CACg=</con:value></con:property><con:property><con:name>SignatureToken2</con:name><con:value>BbZO7rWf2su9z1uSluuaM+ApkacuXo0G5PIx4oBc2VSABJcaxqAr7ydnx/w378+3kLoUYIC1k/ydtUpENyuucJZdRexQhSWWBvMkGGE9ZDjmVqZCXV8TlqC6EvdGkG+l9Av2VzYS1ItjQLq4lijXGNx1XeTnTmesYMyVabKm8LI=</con:value></con:property><con:property><con:name>UserName</con:name><con:value>testcoach1@yopmail.com</con:value></con:property><con:property><con:name>Prefix</con:name><con:value>01</con:value></con:property><con:property><con:name>ProviderID</con:name><con:value>65DDF2FEF2F8050FE0530100007F0BA5</con:value></con:property><con:property><con:name>Application Name</con:name><con:value>COACH PORTAL</con:value></con:property><con:property><con:name>Role Name</con:name><con:value>COACH</con:value></con:property><con:property><con:name>AppName</con:name><con:value>LOGIN</con:value></con:property><con:property><con:name>ContentType</con:name><con:value>application/json</con:value></con:property><con:property><con:name>uniqueRequestID</con:name><con:value>01</con:value></con:property><con:property><con:name>X-FORWARDED-FOR</con:name><con:value>provider-ra-test.zillion.com</con:value></con:property><con:property><con:name>startDateTime</con:name><con:value>2018-03-03T06:30:00.000Z</con:value></con:property><con:property><con:name>endDateTime</con:name><con:value>2018-03-03T07:30:00.000Z</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="groovy" name="endDate" id="058349b0-d9c8-46ab-852c-71c38b72f994"><con:settings/><con:config><script>def ESTDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+def startTime = context.expand( '${DataSource#startTime}' )
+def numberOfdays = context.expand( '${DataSource#NumberOfdays}' ).toString()
+def days = Integer.parseInt(numberOfdays)
+ESTDate.setTimeZone(TimeZone.getTimeZone('EST'))
+def res= (ESTDate.format( new Date()+days+2)).toString()
+log.info (res)
+return res.toString()
+
+ 
+</script></con:config></con:testStep><con:testStep type="groovy" name="SDate" id="8e7670f6-dd9a-44d7-b9b9-cd87059be6dc"><con:settings/><con:config><script>def ESTDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+def startTime = context.expand( '${DataSource#startTime}' )
+def numberOfdays = context.expand( '${DataSource#NumberOfdays}' ).toString()
+def days = Integer.parseInt(numberOfdays)
+ESTDate.setTimeZone(TimeZone.getTimeZone('EST'))
+def res= (ESTDate.format( new Date()+days)).toString()+startTime
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("startDateTime",res )
+log.info (res)
+return res.toString()
+
+ 
+</script></con:config></con:testStep><con:testStep type="groovy" name="EDate" id="8f0c772e-c8ab-4691-b010-b1ab24756165"><con:settings/><con:config><script>def ESTDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+def EndTime = context.expand( '${DataSource#EndTime}' )
+def numberOfdays = context.expand( '${DataSource#NumberOfdays}' ).toString()
+def days = Integer.parseInt(numberOfdays)
+ESTDate.setTimeZone(TimeZone.getTimeZone('EST'))
+def res= (ESTDate.format( new Date()+days)).toString()+EndTime
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("endDateTime",res )
+log.info (res)
+return res.toString()
+
+ 
+</script></con:config></con:testStep><con:testStep type="datagen" name="TimeGen" id="4e3c82f9-6bab-4061-96db-278efe45fb4b"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def UTCDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+Date dNow = new Date(System.currentTimeMillis())
+java.text.SimpleDateFormat UTCTime = new java.text.SimpleDateFormat ("HH:mm:ss");
+UTCDate.setTimeZone(TimeZone.getTimeZone('UTC'))
+UTCTime.setTimeZone(TimeZone.getTimeZone('UTC'))
+def res= (UTCDate.format( new Date())).toString()+'T'+(UTCTime.format(dNow)).toString()+'Z'
+return res.toString()</script></con:configuration><con:name>UTC_Time</con:name><con:mode>READ</con:mode><con:shared>true</con:shared></con:property><con:property type="Script"><con:configuration><script>def UTCDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+Date dNow = new Date(System.currentTimeMillis())
+java.text.SimpleDateFormat UTCTime = new java.text.SimpleDateFormat ("00:00:00.000");
+UTCDate.setTimeZone(TimeZone.getTimeZone('UTC'))
+UTCTime.setTimeZone(TimeZone.getTimeZone('UTC'))
+def res= (UTCDate.format( new Date())).toString()+'T'+(UTCTime.format(dNow)).toString()+'Z'
+return res.toString()
+</script></con:configuration><con:name>rangeStart</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property><con:property type="Script">
+    <con:configuration><script>def UTCDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+Date dNow = new Date(System.currentTimeMillis()+5*60*1000*12)
+java.text.SimpleDateFormat UTCTime = new java.text.SimpleDateFormat ("00:00:00.000");
+UTCDate.setTimeZone(TimeZone.getTimeZone('UTC'))
+UTCTime.setTimeZone(TimeZone.getTimeZone('UTC'))
+def res= (UTCDate.format( new Date()+9)).toString()+'T'+(UTCTime.format(dNow)).toString()+'Z'
+return res.toString()</script></con:configuration>
+    <con:name>rangeEnd</con:name>
+    <con:mode>STEP</con:mode>
+    <con:shared>false</con:shared>
+  </con:property></con:config></con:testStep><con:testStep type="datagen" name="MessageGen" id="ece7e29e-41e1-4b9a-b45f-2f662f6f70d9"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def prefix = context.expand( '${Property#Prefix}' )
+def orgId = context.expand( '${DataSource#orgId}' )
+
+def appName = context.expand( '${Property#AppName}' )
+
+def username = context.expand( '${DataSource#UserName}' )
+
+
+def password = context.expand( '${DataSource#password}' ) 
+def message = prefix+orgId+appName+username+password
+return message</script></con:configuration><con:name>MessageGen</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token" id="4af4c5ad-c1d7-428d-97c2-0a939ccf081b"><con:settings/><con:config service="GST" resourcePath="/api/generateSignatureToken" methodName="GST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token" id="cbee2c2c-f9a3-45a9-a704-cd58b2cef95e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#tokenEndPoints}</con:endpoint><con:request>{
+   "organizationId": "${DataSource#orgId}",
+   "applicationName": "${Property#AppName}",
+   "message": "${MessageGen#MessageGen}"
+}</con:request><con:originalUri>https://provider.myrealappeal.test/api/generateSignatureToken</con:originalUri><con:assertion type="JsonPath Match" id="710700de-b4c9-4931-9e46-52fa447f6bd1" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="applicationName" value="${Property#AppName}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 1" id="1ed623f2-b35d-40f8-a3ff-5224b4b27917"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" transferToAll="false" entitize="false" ignoreEmpty="false" transferChildNodes="false"><con:name>data</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Generate Signature Token</con:sourceStep><con:sourcePath>$.ResponseData</con:sourcePath><con:targetType>SignatureToken</con:targetType><con:targetStep>Property</con:targetStep><con:targetPath/><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Authenticate User" id="58273069-22bb-43f3-bec4-9d8dcc2921d6"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/auth/v2/authenticateuser" methodName="Authenticate User" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Authenticate User" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#environment}</con:endpoint><con:request>{
+   "username": "${DataSource#UserName}",
+   "password": "Pi9TAkQ+Vl4XLkFdRVZW",
+   "timeOfRequestInUTC": "${TimeGen#UTC_Time}"
+}
+</con:request><con:originalUri>http://uatperfapi.healthfleet.com/</con:originalUri><con:assertion type="JsonPath Match" id="ac408c4e-5e4f-49ae-b77b-3a3f9e629ea5" name="Authenticate User"><con:configuration><path>$.ResponseCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="UniqueRequestID" value="${Property#uniqueRequestID}"/>
+  <con:entry key="applicationName" value="${Property#AppName}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>UniqueRequestID</con:entry><con:entry/></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer App Name" id="69f3538e-ce5b-4762-a3e7-9c449d2553bf"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>AppName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userRolesList[0].applicationsList[0]</con:sourcePath><con:targetType>Application Name</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:targetTransferType>JSONPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>Role Name</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userRolesList[0].roleName</con:sourcePath><con:targetType>Role Name</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>providerId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Authenticate User</con:sourceStep><con:sourcePath>$.ResponseData.userId</con:sourcePath><con:targetType>ProviderID</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="datagen" name="MessageGen 2" id="2d2179ff-950b-4303-9a32-a6d61ac30d5c"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script>def prefix = context.expand( '${Property#Prefix}' )
+def orgId = context.expand( '${DataSource#orgId}' )
+
+def applicationName = context.expand( '${Property#Application Name}' )
+def roleName = context.expand( '${Property#Role Name}' )
+def providerID = context.expand( '${Property#ProviderID}' )
+message1 = prefix+orgId+applicationName+roleName+providerID
+return message1</script></con:configuration><con:name>MessageGen</con:name><con:mode>STEP</con:mode><con:shared>true</con:shared></con:property></con:config></con:testStep><con:testStep type="restrequest" name="Generate Signature Token 2" id="24f35695-04f9-4055-9153-742024ae4185"><con:settings/><con:config service="GST" resourcePath="/api/generateSignatureToken" methodName="GST" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Generate Signature Token 2" id="cbee2c2c-f9a3-45a9-a704-cd58b2cef95e" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#tokenEndPoints}</con:endpoint><con:request>{
+   "organizationId": "${DataSource#orgId}",
+   "applicationName": "${Property#Application Name}",
+   "message": "${MessageGen 2#MessageGen}"
+}</con:request><con:originalUri>https://provider.myrealappeal.test/api/generateSignatureToken</con:originalUri><con:assertion type="JsonPath Match" id="404cbdf8-d88a-4584-b822-ce8b4f5ad7da" name="JsonPath Match"><con:configuration><path>$.ResponseStatus</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="transfer" name="PropertyTransfer 2" id="5358df47-3dc9-4b93-a899-b0a67cbd907c"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>SignatureToken</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>Generate Signature Token 2</con:sourceStep><con:sourcePath>$.ResponseData</con:sourcePath><con:targetType>SignatureToken2</con:targetType><con:targetStep>Property</con:targetStep><con:type>JSONPATH</con:type><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="restrequest" name="Authenticate Application" id="10fc7d0c-8c70-462f-9638-bac641853ef4"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/auth/v2/authenticateapplication" methodName="Generate Signature Token - Authenticate Application" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Authenticate Application" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#environment}</con:endpoint><con:request>{
+	"timeOfRequestInUTC": "${TimeGen#UTC_Time}"
+	}</con:request><con:originalUri>http://uatapi.healthfleet.com/auth/v1/authenticateapplication</con:originalUri><con:assertion type="JsonPath Match" id="25d6a86f-1e8d-45b9-911b-e801d6cdec0e" name="Authenticate App"><con:configuration><path>$.ResponseCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$.ResponseData.userId}"/>
+  <con:entry key="TimeinUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>TimeinUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>authorizedUserName</con:entry><con:entry>X-FORWARDED-FOR</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="providerProfile" id="d4c32e9c-afee-4315-bc20-8a83d2ba5e5e"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v2/provider/{providerID}/profile" methodName="providerProfile" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="providerProfile" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>eventTypes</con:entry><con:entry>rangeStart</con:entry><con:entry>rangeEnd</con:entry><con:entry>sessionStatus</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="events" id="8a975b7e-1b4b-4bc8-8ffa-66d3a7ed1637"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/provider/{providerID}/events" methodName="events" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="events" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="${TimeGen#rangeStart}"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="${TimeGen#rangeEnd}"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>eventTypes</con:entry><con:entry>rangeStart</con:entry><con:entry>rangeEnd</con:entry><con:entry>sessionStatus</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="WholeDay" id="3f7ebddf-5b7a-4965-a015-74fb090137bb"><con:settings/><con:config><script>def availableforthetime = context.expand( '${DataSource#availableforthetime}' )
+def numberOfdays = context.expand( '${DataSource#NumberOfdays}' ).toString()
+def days = Integer.parseInt(numberOfdays)
+def EndTime = context.expand( '${DataSource#EndTime}' )
+def StartTime = context.expand( '${DataSource#startTime}' )
+//log.info(StartTime)
+if (availableforthetime=="WholeDay")
+{
+def UTCDate = new java.text.SimpleDateFormat("yyyy-MM-dd")
+UTCDate.setTimeZone(TimeZone.getTimeZone('UTC'))
+def res1= (UTCDate.format( new Date()+days)).toString()+StartTime
+def res2= (UTCDate.format( new Date()+days+1)).toString()+EndTime
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("startDateTime",res1 )
+testRunner.testCase.getTestStepByName("Property").setPropertyValue("endDateTime",res2 )
+log.info(res1)
+log.info(res2)
+
+}
+
+</script></con:config></con:testStep><con:testStep type="restrequest" name="availability" id="e8eae5af-f25b-4b87-af37-4ac60ff003ab"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/provider/{providerID}/availability/schedule" methodName="availability" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="availability" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#environment}</con:endpoint><con:request>{
+	"startDateTime": "${Property#startDateTime}",
+	"endDateTime": "${Property#endDateTime}",
+	"eventType": "${DataSource#eventType}",
+	"frequencyType": "RepeatsWeekly",
+	"isRecurring":${DataSource#isRecurring},
+	"frequencyDaysOfWeek": "${DataSource#frequencyDaysOfWeek}",
+	"frequencyTimezone": "${DataSource#timeZone}",
+	"frequencyInterval": "1",
+	"frequencyEndDate": "${endDate#result}"
+}</con:request><con:originalUri>http://uatperfapi.healthfleet.com/</con:originalUri><con:assertion type="JsonPath Match" id="ac408c4e-5e4f-49ae-b77b-3a3f9e629ea5" name="Authenticate User"><con:configuration><path>$.ResponseCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="UniqueRequestID" value="${Property#uniqueRequestID}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>UniqueRequestID</con:entry><con:entry/></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="approvedSession" id="8af204c8-98bb-416c-ac7d-5efa4235438c" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/classrooms/search/status/Approved" methodName="approvedSession" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="approvedSession" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="pageNumber" value="0"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="timezone" value="${DataSource#timeZone}"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="pageSize" value="10"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="dayOfWeek" value="All"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>programName</con:entry><con:entry>coachName</con:entry><con:entry>timezone</con:entry><con:entry>dayOfWeek</con:entry><con:entry>pageNumber</con:entry><con:entry>pageSize</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="userRole" id="ab208cce-df61-4a66-bdba-dbaf3ba1102f" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/auth/useroles" methodName="userRole" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="userRole" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>eventTypes</con:entry><con:entry>rangeStart</con:entry><con:entry>rangeEnd</con:entry><con:entry>sessionStatus</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="providerProfileImage" id="fb0253d1-64ff-4599-aaa3-f951f77f1a4d" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v2/provider/image/{providerID}_Profile/profile" methodName="providerProfileImage" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="providerProfileImage" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${approvedSession#Response#$['ResponseData'][0]['ownerId']['id']}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>eventTypes</con:entry><con:entry>rangeStart</con:entry><con:entry>rangeEnd</con:entry><con:entry>sessionStatus</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="organization" id="ae2db124-b5f6-4a4e-bc18-70228c77f407" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v2/organization/02/feature/CREDIT_CARD/state" methodName="organization" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="organization" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="2017-07-19T18:29:59.000Z"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="startDate" value="2017-07-11T18:30:00.000Z"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>eventTypes</con:entry><con:entry>rangeStart</con:entry><con:entry>rangeEnd</con:entry><con:entry>sessionStatus</con:entry><con:entry>providerID</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="SessionSearch" id="6d6a7457-9fcd-44d9-9851-effc25f6d6a2" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/sessions/search" methodName="SessionSearch" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="SessionSearch" id="3f516418-447f-43ea-ba07-7181b916f281" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://raloadapi.zillion.com</con:endpoint><con:request/><con:originalUri>https://testapi.zillion.com/provider/v1/sessions/search</con:originalUri><con:assertion type="JsonPath Match" id="812282bb-1e53-42a0-a074-eca62d9c363e" name="JsonPath Match"><con:configuration><path>$['ResponseStatus']</path><content>OK</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="rangeStart" value="2017-07-29T00:00:00.000Z"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="endDate" value="${TimeGen#EndDate}"/>
+  <con:entry key="programIntervalNumber" value="${DataSource#programIntervalNumber}"/>
+  <con:entry key="sessionStatus" value="${DataSource#sessionStatus}"/>
+  <con:entry key="recordingsOnly" value="${DataSource#recordingsOnly}"/>
+  <con:entry key="sessionTypeId" value="${DataSource#sessionTypeId}"/>
+  <con:entry key="eventTypes" value="${DataSource#eventTypes}"/>
+  <con:entry key="coachId" value="${approvedSession#Response#$['ResponseData'][0]['ownerId']['id']}"/>
+  <con:entry key="rangeEnd" value="2017-08-07T00:00:00.000Z"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="sortColumn" value="date"/>
+  <con:entry key="masterProgramId " value="${DataSource#masterProgramId}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="accountUsername " value="${DataSource#accountUsername}"/>
+  <con:entry key="sortOrder" value="ASC"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="startDate" value="${TimeGen#StartDate}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>uniqueRequestId</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>timeInUTC</con:entry><con:entry>authorizedUserID</con:entry><con:entry>X-FORWARDED-FOR</con:entry><con:entry>startDate</con:entry><con:entry>endDate</con:entry><con:entry>sessionStatus</con:entry><con:entry>coachId</con:entry><con:entry>sortColumn</con:entry><con:entry>sortOrder</con:entry></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="restrequest" name="availabilityRepeat" id="d9d61af4-3217-4b9f-9e37-d8db70be5d44" disabled="true"><con:settings/><con:config service="http://uatperfapi.healthfleet.com" resourcePath="/provider/v1/provider/{providerID}/availability/schedule" methodName="availability" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="availabilityRepeat" id="9863ed5b-f9d7-4a2a-84fe-72736c845241" mediaType="application/json" postQueryString="false"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>${DataSource#environment}</con:endpoint><con:request>{
+	"startDateTime": "${SDate#result}",
+	"endDateTime": "${EDate#result}",
+	"eventType": "${DataSource#eventType}",
+	"frequencyType": "RepeatsWeekly",
+	"isRecurring": true,
+	"frequencyDaysOfWeek": "${DataSource#frequencyDaysOfWeek}",
+	"frequencyTimezone": "${DataSource#timeZone}",
+	"frequencyInterval": "1",
+	"frequencyEndDate": "${endDate#result}"
+}</con:request><con:originalUri>http://uatperfapi.healthfleet.com/</con:originalUri><con:assertion type="JsonPath Match" id="ac408c4e-5e4f-49ae-b77b-3a3f9e629ea5" name="Authenticate User"><con:configuration><path>$.ResponseCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:selectedAuthProfile>No Authorization</con:selectedAuthProfile><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:parameters>
+  <con:entry key="organizationID" value="${DataSource#orgId}"/>
+  <con:entry key="uniqueRequestId" value="${Property#uniqueRequestID}"/>
+  <con:entry key="authorizedSignatureToken" value="${Property#SignatureToken2}"/>
+  <con:entry key="X-FORWARDED-FOR" value="${Property#X-FORWARDED-FOR}"/>
+  <con:entry key="timeInUTC" value="${TimeGen#UTC_Time}"/>
+  <con:entry key="UniqueRequestID" value="${Property#uniqueRequestID}"/>
+  <con:entry key="authorizedUserID" value="${Authenticate User#Response#$['ResponseData']['userId']}"/>
+  <con:entry key="providerID" value="${Property#ProviderID}"/>
+  <con:entry key="applicationName" value="${Property#Application Name}"/>
+  <con:entry key="Content-Type" value="${Property#ContentType}"/>
+</con:parameters><con:parameterOrder><con:entry>applicationName</con:entry><con:entry>Content-Type</con:entry><con:entry>organizationID</con:entry><con:entry>authorizedSignatureToken</con:entry><con:entry>UniqueRequestID</con:entry><con:entry/></con:parameterOrder><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:restRequest></con:config></con:testStep><con:testStep type="datagen" name="status" id="97909524-2a6f-47eb-aefc-3188af2fdf02"><con:settings/><con:config xsi:type="con:DataGeneratorStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:property type="Script"><con:configuration><script><![CDATA[def response1 = context.expand( '${events#Response#$.ResponseStatus}' )
+def response2 = context.expand( '${providerProfile#Response#$.ResponseStatus}' )
+def response3 = context.expand( '${availability#Response#$.ResponseStatus}' )
+//def response4 = context.expand( '${approvedSession#Response#$.ResponseStatus}' )
+//def response5 = context.expand( '${userRole#Response#$.ResponseStatus}' )
+//def response6 = context.expand( '${providerProfileImage#Response#$.ResponseStatus}' )
+//def response7 = context.expand( '${organization#Response#$.ResponseStatus}' )
+//def response8 = context.expand( '${SessionSearch#Response#$.ResponseStatus}' )
+if ((response1 =="OK") && (response2 =="OK") &&	(response3 =="OK"))//&& (response4 =="OK") &&	(response5 =="OK")&&	(response6 =="OK")&& (response7 =="OK") &&	(response8 =="OK"))
+{
+	def res ="Passed";
+	return res.toString();
+}
+
+else
+
+{
+	def res ="Failed";
+	return res.toString();
+}
+
+
+]]></script></con:configuration><con:name>actual</con:name><con:mode>READ</con:mode><con:shared>false</con:shared></con:property><con:property type="Script"><con:configuration><script>def expected = context.expand( '${DataSource#expected}' )
+def actual = context.expand( '${status#actual}' )
+
+if (expected==actual)
+{ 
+def status = "Passed"
+return status.toString();
+}
+else{
+status = "Failed"
+return status.toString();
+}
+</script></con:configuration><con:name>status</con:name><con:mode>STEP</con:mode><con:shared>false</con:shared></con:property></con:config></con:testStep><con:testStep type="datasink" name="collectData" id="2fb47068-109c-42b9-80bd-ebaa69f99499"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responsePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>true</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>scenario</con:name><con:value>${DataSource#Scenario}</con:value></con:property><con:property><con:name>userName</con:name><con:value>${DataSource#UserName}</con:value></con:property><con:property><con:name>startTime</con:name><con:value>${Property#startDateTime}</con:value></con:property><con:property><con:name>EndTime</con:name><con:value>${Property#endDateTime}</con:value></con:property><con:property><con:name>EndDate</con:name><con:value>${endDate#result}</con:value></con:property><con:property><con:name>isRecurring</con:name><con:value>${DataSource#isRecurring}</con:value></con:property><con:property><con:name>frequencyDaysOfWeek</con:name><con:value>${DataSource#frequencyDaysOfWeek}</con:value></con:property><con:property><con:name>Authenticate User</con:name><con:value>${Authenticate User#Response#$['ResponseStatus']}</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>${Authenticate Application#Response#$['ResponseStatus']}</con:value></con:property><con:property><con:name>providerProfile</con:name><con:value>${providerProfile#Response#$['ResponseStatus']}</con:value></con:property><con:property><con:name>events</con:name><con:value>${events#Response#$['ResponseStatus']}</con:value></con:property><con:property><con:name>availability</con:name><con:value>${availability#Response#$['ResponseStatus']}</con:value></con:property><con:property><con:name>expected</con:name><con:value>${DataSource#expected}</con:value></con:property><con:property><con:name>actual</con:name><con:value>${status#actual}</con:value></con:property><con:property><con:name>status</con:name><con:value>${status#status}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasink" name="ResponseTime" id="5bbeff54-60b5-48b6-99fb-bff83915f9cf"><con:settings/><con:config xsi:type="con:DataSinkStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:dataSink type="File"><con:configuration><fileName>${autoPathGenerator#responseTimePath}</fileName><separator>,</separator><escape>"</escape><quote>true</quote><trim>true</trim><append>true</append><encoding>UTF-8</encoding></con:configuration></con:dataSink><con:properties><con:property><con:name>Generate Signature Token</con:name><con:value>${=testRunner.testCase.testSteps["Generate Signature Token"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Authenticate User</con:name><con:value>${=testRunner.testCase.testSteps["Authenticate User"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Generate Signature Token 2</con:name><con:value>${=testRunner.testCase.testSteps["Generate Signature Token 2"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>Authenticate Application</con:name><con:value>${=testRunner.testCase.testSteps["Authenticate Application"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>providerProfile</con:name><con:value>${=testRunner.testCase.testSteps["providerProfile"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>events</con:name><con:value>${=testRunner.testCase.testSteps["events"].testRequest.response.timeTaken}</con:value></con:property><con:property><con:name>availability</con:name><con:value>${=testRunner.testCase.testSteps["availability"].testRequest.response.timeTaken}</con:value></con:property></con:properties></con:config></con:testStep><con:testStep type="datasourceloop" name="Data Loop" id="5359570c-bdfc-4eb5-b079-613336334dd8"><con:settings/><con:config><dataSourceStep>DataSource</dataSourceStep><targetStep>Property</targetStep></con:config></con:testStep><con:properties/><con:reportParameters/><con:breakPoints><con:testStepId>1ed623f2-b35d-40f8-a3ff-5224b4b27917</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5358df47-3dc9-4b93-a899-b0a67cbd907c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>1a7d680c-80c7-474c-b25a-304b79c693f4</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>69f3538e-ce5b-4762-a3e7-9c449d2553bf</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5359570c-bdfc-4eb5-b079-613336334dd8</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>ece7e29e-41e1-4b9a-b45f-2f662f6f70d9</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>2d2179ff-950b-4303-9a32-a6d61ac30d5c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>49bc44e3-a0ee-4ca3-bf7e-8567b71998a0</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>58273069-22bb-43f3-bec4-9d8dcc2921d6</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8a975b7e-1b4b-4bc8-8ffa-66d3a7ed1637</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>d4c32e9c-afee-4315-bc20-8a83d2ba5e5e</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>e8eae5af-f25b-4b87-af37-4ac60ff003ab</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>97909524-2a6f-47eb-aefc-3188af2fdf02</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>5bbeff54-60b5-48b6-99fb-bff83915f9cf</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>2895b688-e39c-4bb8-b8f7-6dbafbdba2bb</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8af204c8-98bb-416c-ac7d-5efa4235438c</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>ab208cce-df61-4a66-bdba-dbaf3ba1102f</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>fb0253d1-64ff-4599-aaa3-f951f77f1a4d</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>6d6a7457-9fcd-44d9-9851-effc25f6d6a2</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>ae2db124-b5f6-4a4e-bc18-70228c77f407</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>d9d61af4-3217-4b9f-9e37-d8db70be5d44</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>3f7ebddf-5b7a-4965-a015-74fb090137bb</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>4e3c82f9-6bab-4061-96db-278efe45fb4b</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:breakPoints><con:testStepId>8e7670f6-dd9a-44d7-b9b9-cd87059be6dc</con:testStepId><con:status>NONE</con:status><con:properties/></con:breakPoints><con:environmentSpec><con:entry environmentId="6629b04a-be6b-44e1-9a1e-c031c4603ae6"><con:authProfile>Inherit From Parent</con:authProfile></con:entry></con:environmentSpec></con:testCase>
