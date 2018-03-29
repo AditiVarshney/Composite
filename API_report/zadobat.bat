@@ -1,0 +1,1 @@
+java -jar -Dzado.reporter.config=C:\APIFunctionalTest\qa-automation-api\API_report\zadoCI.properties -DlogfileLoc=C:\log ZA_API.jar

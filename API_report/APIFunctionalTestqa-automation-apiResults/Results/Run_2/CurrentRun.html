@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Current Run Reports</title>
+
+        <link rel="stylesheet" type="text/css" href="../../HTML_Design_Files/CSS/design.css" />
+        <link rel="stylesheet" type="text/css" href="../../HTML_Design_Files/CSS/jquery.jqplot.css" />
+
+        <script type="text/javascript" src="../../HTML_Design_Files/JS/jquery.min.js"></script>
+        <script type="text/javascript" src="../../HTML_Design_Files/JS/jquery.jqplot.min.js"></script>
+        <!--[if lt IE 9]>
+        <script language="javascript" type="text/javascript" src="../../HTML_Design_Files/JS/excanvas.js"></script>
+        <![endif]-->
+
+        <script language="javascript" type="text/javascript" src="../../HTML_Design_Files/JS/jqplot.pieRenderer.min.js"></script>
+        <script type="text/javascript" src="pieChart.js"></script>
+
+<script language="javascript" type="text/javascript">$(document).ready(function() { $(".video").hide();$("#showmenu").show(); $('#showmenu').click(function(){ $('.video').toggle("slide"); }); });</script><style>#showmenu{text-align:center; padding-top:350px;color: #585858; font-size: 14px;}#video{height: 550px;    margin-top: 5px;    width: 97%;    border-style: solid;    border-width: 1px;    border-color: #21ABCD;    /* Shadow for boxes */    -moz-box-shadow: 0 0 10px #CCCCCC;    -ms-box-shadow: 0 0 10px #CCCCCC;    -webkit-box-shadow: 0 0 10px #CCCCCC;    box-shadow: 0 0 10px #CCCCCC;    zoom: 1;    filter: progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, Strength=2, Direction=0),        progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, Strength=2, Direction=90),        progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, Strength=2, Direction=180),        progid:DXImageTransform.Microsoft.Shadow(Color=#cccccc, Strength=2, Direction=270);    background-color: white;}</style><script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	$('#tcFilter').on('change',function(){
+    if($(this).val()=='pass'){
+        $('.pass').show();
+		$('.fail').hide();
+		$('.skip').hide();
+		$('.config').hide();
+    }
+	if($(this).val()=='fail'){
+        $('.pass').hide();
+		$('.fail').show();
+		$('.skip').hide();
+		$('.config').hide();
+    }
+	
+	if($(this).val()=='skip'){
+        $('.pass').hide();
+		$('.fail').hide();
+		$('.skip').show();
+		$('.config').hide();
+    }
+	
+if($(this).val()=='tests'){ $('.pass').show(); $('.fail').show(); $('.skip').show(); $('.config').hide(); }	if($(this).val()=='config'){
+        $('.pass').hide();
+		$('.fail').hide();
+		$('.skip').hide();
+		$('.config').show();
+    }
+	
+	if($(this).val()=='all'){
+        $('.pass').show();
+		$('.fail').show();
+		$('.skip').show();
+		$('.config').show();
+    }
+  });
+});       
+</script>
+<script language="javascript" type="text/javascript">$(document).ready(function() {	$('#suiteFilter').on('change',function(){if($(this).val()=='all'){      $('.all').show();  }  }); });</script>
+    </head>
+    <body>
+        <table id="mainTable">
+            <tr id="header" >
+                <td id="logo"><img src="../../HTML_Design_Files/IMG/logo.png" alt="Logo" height="70" width="140" /> <br/>                <td id="headertext">
+                    <b>API Automation Summary</b><div style="padding-right:20px;float:right"><img src="../../HTML_Design_Files/IMG/logo.png" height="70" width="140" /> </i></div></td>
+
+            </tr>
+
+            <tr id="container">
+                <td id="menu">
+                    <ul> 
+
+ <li class="menuStyle"><a href="../../index.html" >Detail Report View</a></li><li style="padding-top: 4px;"><a href="../ConsolidatedPage.html" >Test Report Chart View</a></li>
+
+
+                    </ul>
+                </td>
+
+
+<td id="content">
+                    <div class="info">                        Current Test Execution: <b> Test Execution 2</b>
+                    </div>
+<div class="info"><br/><b></b><br/><br/></div>                    <div>
+                        <div class="chartStyle summary" style="width: 32%;background-color: #16a4ce;">
+                            <b>Summary</b><br/><br/>
+                            <table>
+                            <tr>
+                                <td>Execution Date</td>
+                                <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                <td>16-Nov-2017 10:27:04</td>
+                            </tr>
+                            <tr>
+                                <td>Total Test Cases</td>
+                                <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                <td>1388</td>
+                            </tr>
+                            <tr>
+                                <td>Passed</td>
+                                <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                <td>1040</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Failed</td>
+                                <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                <td>348</td>
+                            </tr>
+
+                            <tr>
+                                <td>Skipped</td>
+                                <td>&nbsp;&nbsp;:&nbsp;&nbsp;</td>
+                                <td>0</td>
+                            </tr>
+                        </table> 
+                        </div>                        <div class="chartStyle" style="text-align: left;margin-left: 30px;float: left;width: 60%;">                        
+                            <div id="chart" style="height:300px;color:black;"></div>
+                        </div>
+                    </div>
+                    <div>
+
+<div   style="text-align: left;margin-left: 30px;float: left;width: 60%;height: 30px;"></div>
+
+ <div class="wrapper">
+<div class="table">
+<div class="row"><div class="cell" style="color:#2A2A86"><b>V1</b></div></div>
+<div class="row header"><div class="cell"> Component</div><div class="cell">  Total TestCases Run</div><div class="cell">  TestCases Passed</div><div class="cell">  TestCases Failed</div> </div>
+<div class="row"><div class="cell">ContentLibrary</div><div class="cell"> 7</div><div class="cell">7</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">CreateProviderCoach</div><div class="cell"> 21</div><div class="cell">17</div><div class="cell">4</div> </div>
+<div class="row"><div class="cell">CreateProviderProgramAdmin</div><div class="cell"> 21</div><div class="cell">18</div><div class="cell">3</div> </div>
+<div class="row"><div class="cell">GroupSession</div><div class="cell"> 4</div><div class="cell">3</div><div class="cell">1</div> </div>
+<div class="row"><div class="cell">Login</div><div class="cell"> 18</div><div class="cell">15</div><div class="cell">3</div> </div>
+<div class="row"><div class="cell">MemberDashboard</div><div class="cell"> 95</div><div class="cell">95</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">MemberProfile</div><div class="cell"> 34</div><div class="cell">29</div><div class="cell">5</div> </div>
+<div class="row"><div class="cell">MemberProfileFromHfops</div><div class="cell"> 0</div><div class="cell">0</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">MemberProfileFromProvider</div><div class="cell"> 0</div><div class="cell">0</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">MemberSetting</div><div class="cell"> 70</div><div class="cell">38</div><div class="cell">32</div> </div>
+<div class="row"><div class="cell">MessageCenterCoach</div><div class="cell"> 32</div><div class="cell">28</div><div class="cell">4</div> </div>
+<div class="row"><div class="cell">MessageCenterMember</div><div class="cell"> 5</div><div class="cell">5</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">MessageCenterProvider</div><div class="cell"> 36</div><div class="cell">35</div><div class="cell">1</div> </div>
+<div class="row"><div class="cell">Organization</div><div class="cell"> 5</div><div class="cell">3</div><div class="cell">2</div> </div>
+<div class="row"><div class="cell">Platform</div><div class="cell"> 1</div><div class="cell">0</div><div class="cell">1</div> </div>
+<div class="row"><div class="cell">ProgramFromHfops</div><div class="cell"> 49</div><div class="cell">49</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">ProviderProfileCoach</div><div class="cell"> 100</div><div class="cell">69</div><div class="cell">31</div> </div>
+<div class="row"><div class="cell">ProviderProfileFromHfops</div><div class="cell"> 181</div><div class="cell">112</div><div class="cell">69</div> </div>
+<div class="row"><div class="cell">ProviderProfileFromPA</div><div class="cell"> 282</div><div class="cell">191</div><div class="cell">91</div> </div>
+<div class="row"><div class="cell">ProviderProfilePA</div><div class="cell"> 87</div><div class="cell">62</div><div class="cell">25</div> </div>
+<div class="row"><div class="cell">QSEnrollment</div><div class="cell"> 95</div><div class="cell">63</div><div class="cell">32</div> </div>
+<div class="row"><div class="cell">RecordSession</div><div class="cell"> 12</div><div class="cell">12</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">ReenrollmentCancel</div><div class="cell"> 1</div><div class="cell">1</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">ReenrollmentProcess</div><div class="cell"> 1</div><div class="cell">0</div><div class="cell">1</div> </div>
+<div class="row"><div class="cell">ScheduleSession</div><div class="cell"> 4</div><div class="cell">4</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">Search</div><div class="cell"> 20</div><div class="cell">20</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">TrackerExercise</div><div class="cell"> 25</div><div class="cell">20</div><div class="cell">5</div> </div>
+<div class="row"><div class="cell">TrackerFood</div><div class="cell"> 36</div><div class="cell">6</div><div class="cell">30</div> </div>
+<div class="row"><div class="cell">TrackerFoodSearch</div><div class="cell"> 100</div><div class="cell">98</div><div class="cell">2</div> </div>
+<div class="row"><div class="cell">TrackerMeasurement</div><div class="cell"> 15</div><div class="cell">15</div><div class="cell">0</div> </div>
+<div class="row"><div class="cell">TrackerMyPlan</div><div class="cell"> 5</div><div class="cell">4</div><div class="cell">1</div> </div>
+<div class="row"><div class="cell">TrackerWater</div><div class="cell"> 4</div><div class="cell">2</div><div class="cell">2</div> </div>
+<div class="row"><div class="cell">TrackerWeight</div><div class="cell"> 22</div><div class="cell">19</div><div class="cell">3</div> </div>
+<div class="row"><div class="cell"><b>Total</b></div><div class="cell"> <b>1388</b></div><div class="cell"><b>1040</b></div><div class="cell"><b>348</b></div> </div>
+</div>
+</div>
+                        </table>
+                    </div>

@@ -1,0 +1,2 @@
+cd C:\Program Files\SmartBear\ReadyAPI-2.2.0\bin
+cmd.exe /C testrunner.bat "-RJUnit-Style HTML Report" -E%ENV% -I -PMemberCreationViaExternaldata=%WORKSPACE%\T2\data\MemberCreationViaExternaldata.xls -PMemberCreationViaExternalresponse=%WORKSPACE%\Results\%ENV%\V1\MemberCreationViaExternal\MemberCreationViaExternalResult.csv -PMemberCreationViaExternalResponseTimeTime=%WORKSPACE%\ResponseTime\%ENV%\V1\MemberCreationViaExternal\MemberCreationViaExternalResponseTime.csv %WORKSPACE%\T2\script\MemberCreationViaExternal.xml
