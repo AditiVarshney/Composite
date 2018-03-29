@@ -11,7 +11,7 @@ Table : MemberLogin_Result
 </con:description><con:settings><con:setting id="7ff4db27-a950-4866-a3cb-d96251f85bb6fileName">ClassApprove</con:setting></con:settings><con:savedRecentRuns>1</con:savedRecentRuns><con:testStep type="groovy" name="X-For" id="2d81bf7f-6748-4f4a-944b-dfa275fb6162"><con:settings/><con:config><script>def env = testRunner.testCase.testSuite.project.activeEnvironment.name
 if(env=="CI")
 
-def xfor = "provider-ra-ci.zillion.com"
+def xfor = "provider-ra-ci.zillion.com
 testRunner.testCase.getTestStepByName("Property").setPropertyValue("X-FORWARDED-FOR",xfor )
 }
 else if(env=="Kulfi2")
